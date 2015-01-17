@@ -1,0 +1,14 @@
+{
+    "templates": {
+        "applicationName": "Appjector",
+        "linenums": true,
+        "github": "machard/appjector",
+        "default": {
+          "outputSourceFiles" : true
+        },
+        "meta" : {
+          "title" : "Appjector",
+          "description" : "Appjector is a simple lib that aims to simplify dependencies management and to ease testing for node projects"
+        }
+    }
+}

@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+- '0.10'
+before_script:
+- npm install -g grunt-cli
+after_success:
+- if [[ "$TRAVIS_BRANCH" = "master" ]]; then grunt doc && grunt gh-pages:travis; exit 0; fi
+env:
+  global:
+    secure: MQ0fUb0Yk1lokKQ8d1Hg1LkRaBK8vIogLrJwd1kk25G7fBA+kvpyvscZyCpbQgjJF520Se2jiO5p29z6IW5IcMviyM0iLVCPO4d8TyDrCjmKHA72VpiSJbuGfVPlZGbPZ46dhZ3MbtAosNGjXFSg70YOn8nrT65w0oFyW0AL/so=
