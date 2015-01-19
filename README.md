@@ -75,11 +75,11 @@ Component format
 
 'use strict';
 
-exports = function(dep1, dep2, Dep3) {
+module.exports = f = function(dep1, dep2, Dep3) {
 	this.a = ...
 };
 
-exports.prototype.method = function() {
+f.prototype.method = function() {
 	...
 };
 
@@ -93,7 +93,7 @@ exports.prototype.method = function() {
 
 'use strict';
 
-exports = function(dep1, dep2, Dep3) {
+module.exports = function(dep1, dep2, Dep3) {
 	return {};
 };
 
@@ -112,7 +112,7 @@ This allows to **respect strict mode** :
 
 'use strict';
 
-exports = function(class, ConstructorFactory) {
+module.exports = function(class, ConstructorFactory) {
 	// class is the instance of Class
 	class.echo();
 	
@@ -136,7 +136,7 @@ The AppSwitch component
 ```
 'use strict';
 
-exports = function(dep1, appSwitch, dep2) {
+module.exports = function(dep1, appSwitch, dep2) {
 	// as dep1 and dep2 are defined as dependencies 
 	// their eventual start/stop handlers will be executed
 	// before the ones below
