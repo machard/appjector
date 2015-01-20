@@ -1,120 +1,93 @@
 'use strict';
 
 var assert = require('assert');
-var path = require('path');
 var _ = require('lodash');
 
 var Definition = require('../index').Definition;
+var Tocken = require('../index').Token;
 
 describe('testing Definition', function() {
-  var MockToken = require('./mocks/token');
 
-  var definition;
+  it('should allow to instantiate with multiple tokens/array of tokens', function() {
+    var token = new Tocken(function() {}, 'token');
+    var token1 = new Tocken(function() {}, 'token1');
+    var token2 = new Tocken(function() {}, 'token2');
 
-  var appPath = path.resolve(__dirname, 'fixtures/ok');
-  var expectedAppTokenNames = ['app', 'dep', 'dep2'];
+    var definition = new Definition(token1, [token2, token]);
 
-  var multiplePath = path.resolve(__dirname, 'fixtures/error_dbl');
-
-  before(function() {
-    Definition._Token = Definition.Token;
-    Definition.Token = MockToken;
+    assert.strictEqual(definition.get('token'), token);
+    assert.equal(definition.get('token1'), token1);
+    assert.equal(definition.get('token2'), token2);
   });
 
-  beforeEach(function() {
-    definition = new Definition();
+  it('should keep the last token wrapping a given fn', function() {
+    var token1 = new Tocken(function() {}, 'token1');
+    var token2 = new Tocken(token1.original, 'token2');
+
+    var definition = new Definition([token1, token2]);
+
+    assert(!definition.get('token1'));
+    assert(definition.get('token2'));
   });
 
-  it('should allow to add new tokens located in the given path', function() {
-    definition.path(appPath);
+  it('should allow to use push with multiple tokens/array of tokens', function() {
+    var token = new Tocken(function() {}, 'token');
+    var token1 = new Tocken(function() {}, 'token1');
+    var token2 = new Tocken(function() {}, 'token2');
 
-    _.each(expectedAppTokenNames, function(tokenName) {
-      assert(_.findWhere(definition, {name : tokenName}) instanceof Definition.Token);
-    });
+    var definition = new Definition();
+
+    definition.push(token1, [token2, token]);
+
+    assert.strictEqual(definition.get('token'), token);
+    assert.equal(definition.get('token1'), token1);
+    assert.equal(definition.get('token2'), token2);
   });
 
-  it('should throw when an already existing token exists in the given path', function() {
-    definition.path(appPath);
-    assert.throws(function() {
-      definition.path(appPath);
-    });
-  });
+  it('should keep the last token added wrapping a given fn', function() {
+    var token1 = new Tocken(function() {}, 'token1');
+    var token2 = new Tocken(token1.original, 'token2');
 
-  it('should throw if the given path contains multiple files with the same name', function() {
-    assert.throws(function() {
-      definition.path(multiplePath);
-    });
-  });
+    var definition = new Definition(token1);
 
-  it('should throw if definition already contains a token with the same name when calling push', function() {
-    definition.push(new MockToken(_.noop, 'added'));
-    assert.throws(function() {
-      definition.push(new MockToken(_.noop, 'added'));
-    });
-  });
+    definition.push(token2);
 
-  it('should throw if pushing a non token object', function() {
-    assert.throws(function() {
-      definition.push({});
-    });
+    assert(!definition.get('token1'));
+    assert(definition.get('token2'));
   });
 
   it('should allow to replace a token', function() {
-    definition.push(new MockToken(_.noop, 'replace'));
+    var definition = new Definition(new Tocken(function() {}, 'replace'));
 
-    var replace = new MockToken(_.noop, 'replace');
+    var replace = new Tocken(function() {}, 'replace');
 
     definition.replace(replace);
 
-    assert.strictEqual(_.first(definition), replace);
+    assert.strictEqual(definition.get('replace'), replace);
   });
 
   it('should throw if replacing a non existant token', function() {
+    var definition = new Definition();
+
     assert.throws(function() {
-      definition.replace(new MockToken(_.noop, 'replace'));
+      definition.replace(new Tocken(_.noop, 'replace'));
     });
   });
 
-  it('should allow to instantiate an other definition', function() {
-    definition.push(new MockToken(_.noop, 'token1'));
-    definition.push(new MockToken(_.noop, 'token2'));
-    var newDefinition = new Definition(definition);
+  it('should clone definition', function() {
+    var token1 = new Tocken(function() {}, 'token1');
+    var token2 = new Tocken(function() {}, 'token2');
 
-    assert.deepEqual(definition, newDefinition);
-  });
+    var definition = new Definition(token1, token2);
 
-  after(function() {
-    Definition.Token = Definition._Token;
-    delete Definition._Token;
-  });
-});
+    var newDefinition = definition.clone();
 
-describe('Testing Definition.Token', function() {
-  it('should throw if an anonymous function and no name are provided', function() {
-    assert.throws(function() {
-      new Definition.Token(function() {});
-    });
-  });
+    assert.notEqual(newDefinition, definition);
 
-  it('should default to fn.name for the name', function() {
-    var token = new Definition.Token(function a() {});
-    assert.strictEqual(token.name, 'a');
-  });
+    assert(definition.get('token1'));
+    assert(definition.get('token2'));
 
-  it('should use name if provided', function() {
-    var token = new Definition.Token(function a() {}, 'b');
-    assert.strictEqual(token.name, 'b');
-  });
-
-  it('should flag the token as a constructor if the name starts with a capital letter', function() {
-    var token = new Definition.Token(function Ab() {});
-    assert(token.isConstructor);
-  });
-
-  it('should flag the token as a constructor if the provided function has a prototype length', function() {
-    var fn = function() {};
-    fn.prototype.method = _.noop;
-    var token = new Definition.Token(fn, 'a');
-    assert(token.isConstructor);
+    assert.notEqual(definition.get('token1'), newDefinition.get('token1'));
+    assert.notEqual(definition.get('token2'), newDefinition.get('token2'));
   });
 });

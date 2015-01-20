@@ -5,12 +5,15 @@ var sinon = require('sinon');
 var _ = require('lodash');
 
 var Container = require('../index').Container;
-var MockToken = require('./mocks/token');
+var Tocken = require('../index').Token;
+var Definition = require('../index').Definition;
 
 describe('testing Container', function() {
   it('should throw an error if multiple token have the same name (case insensitive)', function() {
     assert.throws(function() {
-      new Container([new MockToken({name : 'name'}), new MockToken({name : 'naMe'})]);
+      new Container(new Definition([
+        new Tocken(function() {}, 'name'), new Tocken(function() {}, 'name')
+      ]));
     });
   });
 
@@ -24,15 +27,15 @@ describe('testing Container', function() {
         })];
       }));
 
-      container = new Container([
-        new MockToken(function main(dep) {
+      container = new Container(new Definition([
+        new Tocken(function main(dep) {
           return spies.main(dep);
         }),
-        new MockToken(function dep() {
+        new Tocken(function dep() {
           return spies.dep();
         }),
-        MockToken.getConstructorToken(spies.klass, 'klass')
-      ]);
+        new Tocken(spies.klass, 'Klass')
+      ]));
     });
 
     it('should throw error if asking for a non existent token', function() {
@@ -77,14 +80,14 @@ describe('testing Container', function() {
         })];
       }));
 
-      container = new Container([
-        new MockToken(function cyclic1(cyclic2) {
+      container = new Container(new Definition([
+        new Tocken(function cyclic1(cyclic2) {
           return spies.cyclic1(cyclic2);
         }),
-        new MockToken(function cyclic2(cyclic1) {
+        new Tocken(function cyclic2(cyclic1) {
           return spies.cyclic2(cyclic1);
         })
-      ]);
+      ]));
     });
 
     it('should throw error when get find a cyclic dependency', function() {

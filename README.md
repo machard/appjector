@@ -31,13 +31,10 @@ Bootstrap an application
 var appjector = require('appjector');
 
 // create the app definition
-var definition = new appjector.Definition();
-
-// add components located in the app path
-definition.path('./app');
-
-// optionally add this helper component to deal with asynchronous start processes
-definition.push(new appjector.Definition.Token(appjector.AppSwitch));
+var definition = new appjector.Definition(
+  // add components located in the app path
+  appjector.utils.pathToTokens('./app')
+);
 
 // create a container from the app definition
 var appContainer = new appjector.Container(definition);
@@ -45,19 +42,11 @@ var appContainer = new appjector.Container(definition);
 // instantiate every components
 appContainer.instantiate();
 
-// optionnaly launch async start processes
-appContainer.get('appswitch').start(function(err) {
-  if (err) {
-    return console.log('app start failed');
-  }
-
-  console.log('app started');
-});
 ```
 
 ----------
 
-Component format
+Component file format
 -------------
 
 > **Principles:**
@@ -99,7 +88,7 @@ module.exports = function(dep1, dep2, Dep3) {
 
 ```
 
-**Be aware** that **defining a component dependency** in function arguments **is case insentive**. 
+> **Be aware** that **defining a component dependency** in function arguments **is case insentive**. 
 
 This allows to **respect strict mode** : 
 
@@ -132,6 +121,36 @@ The AppSwitch component
 > - Each component can define an asynchronous start/stop process
 > - Order start/stop processes executions
 
+First you need to add the component during the bootstraping phase
+
+```
+//index.js
+
+'use strict';
+
+var appjector = require('appjector');
+
+var definition = new appjector.Definition(
+  appjector.utils.pathToTokens('./app'),
+
+  // add the addswitch component
+  new appjector.Definition.Token(appjector.AppSwitch)
+);
+
+var appContainer = new appjector.Container(definition);
+appContainer.instantiate();
+
+// use the component to launch process
+appContainer.get('appswitch').start(function(err) {
+  if (err) {
+    return console.log('app start failed');
+  }
+
+  console.log('app started');
+});
+```
+
+then declare handlers in components
 
 ```
 'use strict';
@@ -155,6 +174,86 @@ module.exports = function(dep1, appSwitch, dep2) {
 ----------------
 
 
+Using ContainerToken
+-------------
+
+> **Objectives:**
+
+> - Provide a component that is an independant container
+> - Access dependencies of the parent container
+> - Have a no dependency conflict with other containers
+
+This **feature** allows to **define submodules** withtin the app. Everything is done when bootstrapping so you have a **centralized place for understanding the dependencies map of your app**.
+
+```
+'use strict';
+
+var appjector = require('appjector');
+
+// global app definition
+var definition = new appjector.Definition(
+  appjector.utils.pathToTokens('./app'),
+  
+  // Add a module
+  new appjector.ContainerToken(
+  	
+  	// name
+    'Auth',
+    
+    // string dependencies available in the containing definition
+    // that we want to access from the sub module
+    ['conf', 'mongoose', 'server'],
+    
+    // definition of the module
+    new appjector.Definition(
+      appjector.utils.pathToTokens('./app/auth'),
+      
+      //you can even add sub modules
+      new appjector.ContainerToken(
+        'rules',
+        new appjector.Definition(
+          appjector.utils.pathToTokens('./app/auth/middlewares/authorizations')
+        )
+      )
+    )
+  )
+  
+  // Other modules
+  // ...
+);
+
+
+//start the app
+var appContainer = new appjector.Container(definition);
+
+appContainer.instantiate();
+
+```
+
+> **Quick note** : When **adding tokens to a definition** you need to care about **order** : **if multiple tokens include the same component function, only the last one will be kept**.
+
+Exemple of an Auth module's component :
+
+```
+// app/auth/routes/user.js
+// this component is part of the Auth module/container
+
+'use strict';
+
+module.exports = function(server, rules, User) {
+	// server : the top container's component declared as a dependency of the Auth module
+	// rules : the defined sub module of Auth module
+	// User : a specific Auth component (located for ex in app/auth/models/user.js)
+	
+	// access submodules components using `get`
+	user.rules.get('registeredOnly');
+};
+
+```
+
+----------------
+
+
 A word on testing
 -------------
 
@@ -165,15 +264,25 @@ A word on testing
 > - Allow to rapidly enable/disable mocking of components
 
 ```
+var MockComponent = function() {
+	this.hello = function() {
+		return 'hi';
+	}
+};
+	
 describe('testing whole app', function() {
   var container;
 
   before(function(done) {
     // create a copy of appDefinition
-    var def = new appjector.Definition(appDefinition);
-
+    var def = appDefinition.clone();
+	
     // mocking ComponentToMock by MockComponent
     def.replace(new appjector.Definition.Token(MockComponent, 'ComponentToMock'));
+    
+    // -- OR --
+    // mocking ComponentToMock by MockComponent in submodule
+    def.get('submodule').replace(new appjector.Definition.Token(MockComponent, 'ComponentToMock'));
 
     // creating a new container
     container = new appjector.Container(def);
@@ -201,10 +310,14 @@ describe('testing Component', function() {
 
   beforeEach(function() {
     // create a copy of appDefinition
-    var def = new appjector.Definition(appDefinition);
+    var def = appDefinition.clone();
 
     // mocking ComponentToMock by MockComponent
     def.replace(new appjector.Definition.Token(MockComponent, 'ComponentToMock'));
+    
+    // -- OR --
+    // mocking ComponentToMock by MockComponent in submodule
+    def.get('submodule').replace(new appjector.Definition.Token(MockComponent, 'ComponentToMock'));
 
     // creating a new container
     var container = new appjector.Container(def);
@@ -213,6 +326,12 @@ describe('testing Component', function() {
     // MockComponent instance will be passed to Component
     // in place of ComponentToMock's one
     component = container.get('component');
+    
+    // -- OR --
+    // instantiate and get the tested component of submodule
+    // MockComponent instance will be passed to Component
+    // in place of ComponentToMock's one
+    component = container.get('submodule').get('component');
   });
 
   it('should ...', function() {
@@ -239,7 +358,8 @@ Full documentation can be seen [here](http://machard.github.com/appjector)
 Coming next
 -------------
 - App example
+- **An helper to have a declarative way of doing bootstraping**
+- Review AppSwitch component functionality
 - Possibility to define multiple components per file (exports.component1 = ...)
-- Sub apps
 
 ----------------

@@ -8,7 +8,7 @@ module.exports = function(grunt) {
     mochacov : {
       lib : {
         options : {
-          reporter : 'spec',
+          coveralls : process.env.CI,
         },
         src : ['tests/**/*.js']
       },
@@ -23,12 +23,6 @@ module.exports = function(grunt) {
       'travis-cov' : {
         options : {
           reporter : 'travis-cov'
-        },
-        src : ['tests/**/*.js']
-      },
-      coveralls : {
-        options : {
-          coveralls : process.env.CI
         },
         src : ['tests/**/*.js']
       }
