@@ -134,7 +134,7 @@ var definition = new appjector.Definition(
   appjector.utils.pathToTokens('./app'),
 
   // add the addswitch component
-  new appjector.Definition.Token(appjector.AppSwitch)
+  new appjector.Token(appjector.AppSwitch)
 );
 
 var appContainer = new appjector.Container(definition);
@@ -278,11 +278,11 @@ describe('testing whole app', function() {
     var def = appDefinition.clone();
 	
     // mocking ComponentToMock by MockComponent
-    def.replace(new appjector.Definition.Token(MockComponent, 'ComponentToMock'));
+    def.replace(new appjector.Token(MockComponent, 'ComponentToMock'));
     
     // -- OR --
     // mocking ComponentToMock by MockComponent in submodule
-    def.get('submodule').replace(new appjector.Definition.Token(MockComponent, 'ComponentToMock'));
+    def.get('submodule').replace(new appjector.Token(MockComponent, 'ComponentToMock'));
 
     // creating a new container
     container = new appjector.Container(def);
@@ -313,11 +313,11 @@ describe('testing Component', function() {
     var def = appDefinition.clone();
 
     // mocking ComponentToMock by MockComponent
-    def.replace(new appjector.Definition.Token(MockComponent, 'ComponentToMock'));
+    def.replace(new appjector.Token(MockComponent, 'ComponentToMock'));
     
     // -- OR --
     // mocking ComponentToMock by MockComponent in submodule
-    def.get('submodule').replace(new appjector.Definition.Token(MockComponent, 'ComponentToMock'));
+    def.get('submodule').replace(new appjector.Token(MockComponent, 'ComponentToMock'));
 
     // creating a new container
     var container = new appjector.Container(def);
