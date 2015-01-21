@@ -1,6 +1,6 @@
 {
   "name": "appjector",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Appjector is a simple lib that aims to simplify dependencies management and to ease testing for node projects",
   "keywords" : ["dependency injection", "container", "service location", "component", "module", "injection", "dependency"],
   "main": "index.js",
