@@ -61,6 +61,31 @@
             </ul>
         </li>
     
+        <li class="item" data-name="appjector.utils">
+            <span class="title">
+                <a href="appjector.utils.html">appjector.utils</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="appjector.utils.pathToTokens"><a href="appjector.utils.html#pathToTokens">pathToTokens</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
         <li class="item" data-name="appjector.AppSwitch">
             <span class="title">
                 <a href="appjector.AppSwitch.html">appjector.AppSwitch</a>
@@ -121,12 +146,24 @@
             </ul>
         </li>
     
-        <li class="item" data-name="appjector.Definition">
+        <li class="item" data-name="appjector.ContainerToken">
             <span class="title">
-                <a href="appjector.Definition.html">appjector.Definition</a>
+                <a href="appjector.ContainerToken.html">appjector.ContainerToken</a>
                 
             </span>
             <ul class="members itemMembers">
+            
+            <span class="subtitle">Members</span>
+            
+                <li data-name="appjector.ContainerToken#definition"><a href="appjector.ContainerToken.html#definition">definition</a></li>
+            
+                <li data-name="appjector.ContainerToken#deps"><a href="appjector.ContainerToken.html#deps">deps</a></li>
+            
+                <li data-name="appjector.ContainerToken#isConstructor"><a href="appjector.ContainerToken.html#isConstructor">isConstructor</a></li>
+            
+                <li data-name="appjector.ContainerToken#name"><a href="appjector.ContainerToken.html#name">name</a></li>
+            
+                <li data-name="appjector.ContainerToken#original"><a href="appjector.ContainerToken.html#original">original</a></li>
             
             </ul>
             <ul class="typedefs itemMembers">
@@ -136,7 +173,40 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="appjector.Definition#path"><a href="appjector.Definition.html#path">path</a></li>
+                <li data-name="appjector.ContainerToken#clone"><a href="appjector.ContainerToken.html#clone">clone</a></li>
+            
+                <li data-name="appjector.ContainerToken#includes"><a href="appjector.ContainerToken.html#includes">includes</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="appjector.Definition">
+            <span class="title">
+                <a href="appjector.Definition.html">appjector.Definition</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            <span class="subtitle">Members</span>
+            
+                <li data-name="appjector.Definition#tokens"><a href="appjector.Definition.html#tokens">tokens</a></li>
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="appjector.Definition#clone"><a href="appjector.Definition.html#clone">clone</a></li>
+            
+                <li data-name="appjector.Definition#get"><a href="appjector.Definition.html#get">get</a></li>
+            
+                <li data-name="appjector.Definition#push"><a href="appjector.Definition.html#push">push</a></li>
             
                 <li data-name="appjector.Definition#replace"><a href="appjector.Definition.html#replace">replace</a></li>
             
@@ -146,26 +216,34 @@
             </ul>
         </li>
     
-        <li class="item" data-name="appjector.Definition.Token">
+        <li class="item" data-name="appjector.Token">
             <span class="title">
-                <a href="appjector.Definition.Token.html">appjector.Definition.Token</a>
+                <a href="appjector.Token.html">appjector.Token</a>
                 
             </span>
             <ul class="members itemMembers">
             
             <span class="subtitle">Members</span>
             
-                <li data-name="appjector.Definition.Token#isConstructor"><a href="appjector.Definition.Token.html#isConstructor">isConstructor</a></li>
+                <li data-name="appjector.Token#deps"><a href="appjector.Token.html#deps">deps</a></li>
             
-                <li data-name="appjector.Definition.Token#name"><a href="appjector.Definition.Token.html#name">name</a></li>
+                <li data-name="appjector.Token#isConstructor"><a href="appjector.Token.html#isConstructor">isConstructor</a></li>
             
-                <li data-name="appjector.Definition.Token#original"><a href="appjector.Definition.Token.html#original">original</a></li>
+                <li data-name="appjector.Token#name"><a href="appjector.Token.html#name">name</a></li>
+            
+                <li data-name="appjector.Token#original"><a href="appjector.Token.html#original">original</a></li>
             
             </ul>
             <ul class="typedefs itemMembers">
             
             </ul>
             <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="appjector.Token#clone"><a href="appjector.Token.html#clone">clone</a></li>
+            
+                <li data-name="appjector.Token#includes"><a href="appjector.Token.html#includes">includes</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -225,30 +303,18 @@
 var appjector = require('appjector');
 
 // create the app definition
-var definition = new appjector.Definition();
-
-// add components located in the app path
-definition.path('./app');
-
-// optionally add this helper component to deal with asynchronous start processes
-definition.push(new appjector.Definition.Token(appjector.AppSwitch));
+var definition = new appjector.Definition(
+  // add components located in the app path
+  appjector.utils.pathToTokens('./app')
+);
 
 // create a container from the app definition
 var appContainer = new appjector.Container(definition);
 
 // instantiate every components
-appContainer.instantiate();
-
-// optionnaly launch async start processes
-appContainer.get('appswitch').start(function(err) {
-  if (err) {
-    return console.log('app start failed');
-  }
-
-  console.log('app started');
-});</code></pre>
+appContainer.instantiate();</code></pre>
 <hr>
-<h2>Component format</h2>
+<h2>Component file format</h2>
 <blockquote>
 <p><strong>Principles:</strong></p>
 <ul>
@@ -278,7 +344,9 @@ f.prototype.method = function() {
 module.exports = function(dep1, dep2, Dep3) {
     return {};
 };</code></pre>
+<blockquote>
 <p><strong>Be aware</strong> that <strong>defining a component dependency</strong> in function arguments <strong>is case insentive</strong>. </p>
+</blockquote>
 <p>This allows to <strong>respect strict mode</strong> : </p>
 <ul>
 <li><strong>an instance</strong> of a <strong>Class</strong> component needs to <strong>have it's first letter lower cased</strong></li>
@@ -305,6 +373,32 @@ module.exports = function(class, ConstructorFactory) {
 <li>Order start/stop processes executions</li>
 </ul>
 </blockquote>
+<p>First you need to add the component during the bootstraping phase</p>
+<pre><code>//index.js
+
+'use strict';
+
+var appjector = require('appjector');
+
+var definition = new appjector.Definition(
+  appjector.utils.pathToTokens('./app'),
+
+  // add the addswitch component
+  new appjector.Definition.Token(appjector.AppSwitch)
+);
+
+var appContainer = new appjector.Container(definition);
+appContainer.instantiate();
+
+// use the component to launch process
+appContainer.get('appswitch').start(function(err) {
+  if (err) {
+    return console.log('app start failed');
+  }
+
+  console.log('app started');
+});</code></pre>
+<p>then declare handlers in components</p>
 <pre><code>'use strict';
 
 module.exports = function(dep1, appSwitch, dep2) {
@@ -321,6 +415,75 @@ module.exports = function(dep1, appSwitch, dep2) {
     });
 }</code></pre>
 <hr>
+<h2>Using ContainerToken</h2>
+<blockquote>
+<p><strong>Objectives:</strong></p>
+<ul>
+<li>Provide a component that is an independant container</li>
+<li>Access dependencies of the parent container</li>
+<li>Have a no dependency conflict with other containers</li>
+</ul>
+</blockquote>
+<p>This <strong>feature</strong> allows to <strong>define submodules</strong> withtin the app. Everything is done when bootstrapping so you have a <strong>centralized place for understanding the dependencies map of your app</strong>.</p>
+<pre><code>'use strict';
+
+var appjector = require('appjector');
+
+// global app definition
+var definition = new appjector.Definition(
+  appjector.utils.pathToTokens('./app'),
+
+  // Add a module
+  new appjector.ContainerToken(
+
+      // name
+    'Auth',
+
+    // string dependencies available in the containing definition
+    // that we want to access from the sub module
+    ['conf', 'mongoose', 'server'],
+
+    // definition of the module
+    new appjector.Definition(
+      appjector.utils.pathToTokens('./app/auth'),
+
+      //you can even add sub modules
+      new appjector.ContainerToken(
+        'rules',
+        new appjector.Definition(
+          appjector.utils.pathToTokens('./app/auth/middlewares/authorizations')
+        )
+      )
+    )
+  )
+
+  // Other modules
+  // ...
+);
+
+
+//start the app
+var appContainer = new appjector.Container(definition);
+
+appContainer.instantiate();</code></pre>
+<blockquote>
+<p><strong>Quick note</strong> : When <strong>adding tokens to a definition</strong> you need to care about <strong>order</strong> : <strong>if multiple tokens include the same component function, only the last one will be kept</strong>.</p>
+</blockquote>
+<p>Exemple of an Auth module's component :</p>
+<pre><code>// app/auth/routes/user.js
+// this component is part of the Auth module/container
+
+'use strict';
+
+module.exports = function(server, rules, User) {
+    // server : the top container's component declared as a dependency of the Auth module
+    // rules : the defined sub module of Auth module
+    // User : a specific Auth component (located for ex in app/auth/models/user.js)
+
+    // access submodules components using `get`
+    user.rules.get('registeredOnly');
+};</code></pre>
+<hr>
 <h2>A word on testing</h2>
 <blockquote>
 <p><strong>Objectives:</strong></p>
@@ -330,15 +493,25 @@ module.exports = function(dep1, appSwitch, dep2) {
 <li>Allow to rapidly enable/disable mocking of components</li>
 </ul>
 </blockquote>
-<pre><code>describe('testing whole app', function() {
+<pre><code>var MockComponent = function() {
+    this.hello = function() {
+        return 'hi';
+    }
+};
+
+describe('testing whole app', function() {
   var container;
 
   before(function(done) {
     // create a copy of appDefinition
-    var def = new appjector.Definition(appDefinition);
+    var def = appDefinition.clone();
 
     // mocking ComponentToMock by MockComponent
     def.replace(new appjector.Definition.Token(MockComponent, 'ComponentToMock'));
+
+    // -- OR --
+    // mocking ComponentToMock by MockComponent in submodule
+    def.get('submodule').replace(new appjector.Definition.Token(MockComponent, 'ComponentToMock'));
 
     // creating a new container
     container = new appjector.Container(def);
@@ -366,10 +539,14 @@ describe('testing Component', function() {
 
   beforeEach(function() {
     // create a copy of appDefinition
-    var def = new appjector.Definition(appDefinition);
+    var def = appDefinition.clone();
 
     // mocking ComponentToMock by MockComponent
     def.replace(new appjector.Definition.Token(MockComponent, 'ComponentToMock'));
+
+    // -- OR --
+    // mocking ComponentToMock by MockComponent in submodule
+    def.get('submodule').replace(new appjector.Definition.Token(MockComponent, 'ComponentToMock'));
 
     // creating a new container
     var container = new appjector.Container(def);
@@ -378,6 +555,12 @@ describe('testing Component', function() {
     // MockComponent instance will be passed to Component
     // in place of ComponentToMock's one
     component = container.get('component');
+
+    // -- OR --
+    // instantiate and get the tested component of submodule
+    // MockComponent instance will be passed to Component
+    // in place of ComponentToMock's one
+    component = container.get('submodule').get('component');
   });
 
   it('should ...', function() {
@@ -395,8 +578,9 @@ describe('testing Component', function() {
 <h2>Coming next</h2>
 <ul>
 <li>App example</li>
+<li><strong>An helper to have a declarative way of doing bootstraping</strong></li>
+<li>Review AppSwitch component functionality</li>
 <li>Possibility to define multiple components per file (exports.component1 = ...)</li>
-<li>Sub apps</li>
 </ul>
 <hr></article>
     </section>
@@ -409,7 +593,7 @@ describe('testing Component', function() {
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Mon Jan 19 2015 23:22:04 GMT-0000 (UTC)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Wed Jan 21 2015 11:34:28 GMT-0000 (UTC)
         </footer>
     </div>
 </div>

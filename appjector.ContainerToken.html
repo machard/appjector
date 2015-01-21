@@ -252,90 +252,706 @@
     </ul>
 </div>
     <div class="main">
-        <h1 class="page-title" data-filename="container.js.html">Source: src/container.js</h1>
+        <h1 class="page-title" data-filename="appjector.ContainerToken.html">Class: ContainerToken</h1>
         
 
 
+
+<section>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>'use strict';
+<header>
+    <h2>
+        <span class="ancestors"><a href="appjector.html">appjector</a>.</span>
+    
+    ContainerToken
+    </h2>
+    
+</header>  
 
-var _ = require('lodash');
-var util = require('util');
+<article>
+    <div class="container-overview">
+    
+    
+    
+        
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="ContainerToken">
+            
+            new appjector.ContainerToken<span class="signature">(definition, <span class="optional">deps</span>, name)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="containertoken.js.html">src/containertoken.js</a>, <a href="containertoken.js.html#line17">line 17</a>
+        </div>
+        
+    </div>
 
-/**
- * A Container is in charge of instantiating {@link appjector.Token|tokens}
- * @class
- * @alias appjector.Container
- * @param {appjector.Definition} definition the definition on which the container is based
- */
-function Container(definition) {
-  this.tokensMap = _.object(_.map(definition.tokens, function(token) {
-    return [token.name.toLowerCase(), token];
-  }));
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        A ContainerToken is a wrapper for a <a href="appjector.Container.html">container</a> component
+    </div>
+    
 
-  this.cache = {};
-  this.resolving = [];
+    
+    
+    
+    
+    
+        
 
-  if (_.keys(this.tokensMap).length &lt; definition.tokens.length) {
-    throw new Error('multiple tokens have the same name (case insensitive check)');
-  }
-}
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>definition</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="appjector.Definition.html">appjector.Definition</a></span>
 
-/**
- * Instantiate every {@link appjector.Token|tokens} of this container
- */
-Container.prototype.instantiate = function() {
-  _.each(_.keys(this.tokensMap), this.get, this);
-};
 
-/**
- * Return the instantiated {@link appjector.Token|token}&lt;br />
- * if the {@link appjector.Token|token} is a constructor, new will be used
- * @param {string} tokenName the name of the token. case insensitive
- * @return {Object} returns the instantiated token
- */
-Container.prototype.get = function(tokenName) {
-  var token = this.tokensMap[tokenName.toLowerCase()];
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        
+                    
+                
+                the definition that will be used to create the container</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>deps</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
 
-  if (!token) {
-    throw new Error('Unknown token name ' +  tokenName);
-  }
 
-  if (this.resolving.indexOf(token) > -1) {
-    throw new Error('Cyclic dependency for ' + token.name);
-  }
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                Array of dependencies as string (case insensitive)</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
 
-  if (this.cache[token.name]) {
-    return this.cache[token.name];
-  }
 
-  this.resolving.push(token);
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        
+                    
+                
+                the name we want this token to have</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
 
-  var deps = _.map(token.deps, this.get, this);
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
 
-  if (token.isConstructor) {
-    var F = function() {
-      token.original.apply(this, deps);
-    };
-    util.inherits(F, token.original);
+    
+    
 
-    this.cache[token.name] = new F();
-  } else {
-    this.cache[token.name] = token.original.apply(null, deps);
-  }
+    
 
-  this.resolving = _.without(this.resolving, token);
+    
+    
+    
+    
+    
+    
+    
+</dd>
 
-  return this.cache[token.name];
-};
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        <h3 class="subsection-title">Members</h3>
+        
+        <dl>
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="definition">definition<span class="type-signature type appjector.definition"><a href="appjector.Definition.html">appjector.Definition</a></span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        The definition of this container token
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
 
-module.exports = Container;
-</code></pre>
-        </article>
-    </section>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
 
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="deps">deps<span class="type-signature type array<string>">Array.&lt;string></span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        The top dependencies of this container token<br />
+it can reference dependencies available in the same definition this containertoken is
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="isConstructor"><span class="type-signature ">constant</span>isConstructor<span class="type-signature type boolean">boolean</span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy"><li>true</li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="name">name<span class="type-signature type string">string</span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the token name
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="original">original<span class="type-signature type appjector.container"><a href="appjector.Container.html">appjector.Container</a></span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the customized Container constructor
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        </dl>
+    
+    
+    
+        <h3 class="subsection-title">Methods</h3>
+        
+        <dl>
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="clone">
+            
+            clone<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="appjector.ContainerToken.html">appjector.ContainerToken</a>}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="containertoken.js.html">src/containertoken.js</a>, <a href="containertoken.js.html#line88">line 88</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Returns a clone of this token
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        <a href="appjector.ContainerToken.html">appjector.ContainerToken</a>
+                        
+                    
+            </td>
+            <td class="description last"></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="includes">
+            
+            includes<span class="signature">(fn)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Boolean}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="containertoken.js.html">src/containertoken.js</a>, <a href="containertoken.js.html#line78">line 78</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Returns if the given function is included in this token definition
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>fn</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                </td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        Boolean
+                        
+                    
+            </td>
+            <td class="description last"></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        </dl>
+    
+    
+    
+    
+    
+</article>
+
+</section>  
 
 
 

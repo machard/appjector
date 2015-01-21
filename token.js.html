@@ -252,7 +252,7 @@
     </ul>
 </div>
     <div class="main">
-        <h1 class="page-title" data-filename="container.js.html">Source: src/container.js</h1>
+        <h1 class="page-title" data-filename="token.js.html">Source: src/token.js</h1>
         
 
 
@@ -262,76 +262,68 @@
             <pre class="prettyprint source linenums"><code>'use strict';
 
 var _ = require('lodash');
-var util = require('util');
+var fnParams = require('fn-params');
 
 /**
- * A Container is in charge of instantiating {@link appjector.Token|tokens}
+ * A Token is a wrapper for a given component function
  * @class
- * @alias appjector.Container
- * @param {appjector.Definition} definition the definition on which the container is based
+ * @alias appjector.Token
+ * @param {Function} fn the function we want as a token
+ * @param {string} [name=fn.name] the name we want the token to have
  */
-function Container(definition) {
-  this.tokensMap = _.object(_.map(definition.tokens, function(token) {
-    return [token.name.toLowerCase(), token];
-  }));
+var Token = function(fn, name) {
+  /**
+  * the token name
+  * @type {string}
+  */
+  this.name = name || fn.name;
 
-  this.cache = {};
-  this.resolving = [];
-
-  if (_.keys(this.tokensMap).length &lt; definition.tokens.length) {
-    throw new Error('multiple tokens have the same name (case insensitive check)');
+  if (!this.name) {
+    throw new Error('No name defined');
   }
-}
 
-/**
- * Instantiate every {@link appjector.Token|tokens} of this container
- */
-Container.prototype.instantiate = function() {
-  _.each(_.keys(this.tokensMap), this.get, this);
+  var char0 = this.name.charAt(0);
+  var prototype = _.merge(fn.prototype, Object.getPrototypeOf(fn.prototype));
+
+  /**
+  * flag that indicates if fn is a constructor&lt;br />
+  * It checks if fn have a prototype or if this token have a PascalCased name
+  * @type {Boolean}
+  */
+  this.isConstructor = char0.toLowerCase() !== char0 || !!_.keys(prototype).length;
+
+  /**
+  * the original function used to create the token
+  * @type {Function}
+  */
+  this.original = fn;
+
+  /**
+  * string dependencies of the token (case insensitive)&lt;br />
+  * it is built from the given fn arguments
+  * @type {Array&lt;string>}
+  */
+  this.deps = fnParams(fn);
 };
 
 /**
- * Return the instantiated {@link appjector.Token|token}&lt;br />
- * if the {@link appjector.Token|token} is a constructor, new will be used
- * @param {string} tokenName the name of the token. case insensitive
- * @return {Object} returns the instantiated token
+ * Returns if the given function is equal this token origin function
+ * @param {Function} fn
+ * @return {Boolean}
  */
-Container.prototype.get = function(tokenName) {
-  var token = this.tokensMap[tokenName.toLowerCase()];
-
-  if (!token) {
-    throw new Error('Unknown token name ' +  tokenName);
-  }
-
-  if (this.resolving.indexOf(token) > -1) {
-    throw new Error('Cyclic dependency for ' + token.name);
-  }
-
-  if (this.cache[token.name]) {
-    return this.cache[token.name];
-  }
-
-  this.resolving.push(token);
-
-  var deps = _.map(token.deps, this.get, this);
-
-  if (token.isConstructor) {
-    var F = function() {
-      token.original.apply(this, deps);
-    };
-    util.inherits(F, token.original);
-
-    this.cache[token.name] = new F();
-  } else {
-    this.cache[token.name] = token.original.apply(null, deps);
-  }
-
-  this.resolving = _.without(this.resolving, token);
-
-  return this.cache[token.name];
+Token.prototype.includes = function(fn) {
+  return this.original === fn;
 };
 
-module.exports = Container;
+/**
+ * Returns a clone of this token
+ * @return {appjector.Token}
+ */
+Token.prototype.clone = function() {
+  return new Token(this.original, this.name);
+};
+
+module.exports = Token;
 </code></pre>
         </article>
     </section>

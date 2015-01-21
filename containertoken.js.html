@@ -252,7 +252,7 @@
     </ul>
 </div>
     <div class="main">
-        <h1 class="page-title" data-filename="container.js.html">Source: src/container.js</h1>
+        <h1 class="page-title" data-filename="containertoken.js.html">Source: src/containertoken.js</h1>
         
 
 
@@ -264,74 +264,93 @@
 var _ = require('lodash');
 var util = require('util');
 
+var Container = require('./container');
+var Token = require('./token');
+
 /**
- * A Container is in charge of instantiating {@link appjector.Token|tokens}
+ * A ContainerToken is a wrapper for a {@link appjector.Container|container} component
  * @class
- * @alias appjector.Container
- * @param {appjector.Definition} definition the definition on which the container is based
+ * @alias appjector.ContainerToken
+ * @param {appjector.Definition} definition the definition that will be used to create the container
+ * @param {Array&lt;string>} [deps] Array of dependencies as string (case insensitive)
+ * @param {string} name the name we want this token to have
  */
-function Container(definition) {
-  this.tokensMap = _.object(_.map(definition.tokens, function(token) {
-    return [token.name.toLowerCase(), token];
-  }));
+var ContainerToken = function(name, deps, definition) {
+  definition = definition || deps;
+  deps = definition !== deps ? deps : null;
 
-  this.cache = {};
-  this.resolving = [];
+  var ct = this;
 
-  if (_.keys(this.tokensMap).length &lt; definition.tokens.length) {
-    throw new Error('multiple tokens have the same name (case insensitive check)');
-  }
-}
+  var fn = function() {
+    var heritedTokens = _.map(_.object(ct.deps, arguments), function(value, name) {
+      return new Token(function() {
+        return value;
+      }, name);
+    });
 
-/**
- * Instantiate every {@link appjector.Token|tokens} of this container
- */
-Container.prototype.instantiate = function() {
-  _.each(_.keys(this.tokensMap), this.get, this);
+    var def = ct.definition.clone();
+    def.push(heritedTokens);
+
+    Container.call(this, def);
+
+    this.instantiate();
+  };
+
+  util.inherits(fn, Container);
+
+  /**
+  * the customized Container constructor
+  * @type {appjector.Container}
+  */
+  this.original = fn;
+
+  /**
+  * the token name
+  * @type {string}
+  */
+  this.name = name;
+
+  /**
+  * @constant
+  * @default true
+  * @type {boolean}
+  */
+  this.isConstructor = true;
+
+  /**
+  * The top dependencies of this container token&lt;br />
+  * it can reference dependencies available in the same definition this containertoken is
+  * @type {Array&lt;string>}
+  */
+  this.deps = deps || [];
+
+  /**
+  * The definition of this container token
+  * @type {appjector.Definition}
+  */
+  this.definition = definition;
 };
 
 /**
- * Return the instantiated {@link appjector.Token|token}&lt;br />
- * if the {@link appjector.Token|token} is a constructor, new will be used
- * @param {string} tokenName the name of the token. case insensitive
- * @return {Object} returns the instantiated token
+ * Returns if the given function is included in this token definition
+ * @param {Function} fn
+ * @return {Boolean}
  */
-Container.prototype.get = function(tokenName) {
-  var token = this.tokensMap[tokenName.toLowerCase()];
-
-  if (!token) {
-    throw new Error('Unknown token name ' +  tokenName);
-  }
-
-  if (this.resolving.indexOf(token) > -1) {
-    throw new Error('Cyclic dependency for ' + token.name);
-  }
-
-  if (this.cache[token.name]) {
-    return this.cache[token.name];
-  }
-
-  this.resolving.push(token);
-
-  var deps = _.map(token.deps, this.get, this);
-
-  if (token.isConstructor) {
-    var F = function() {
-      token.original.apply(this, deps);
-    };
-    util.inherits(F, token.original);
-
-    this.cache[token.name] = new F();
-  } else {
-    this.cache[token.name] = token.original.apply(null, deps);
-  }
-
-  this.resolving = _.without(this.resolving, token);
-
-  return this.cache[token.name];
+ContainerToken.prototype.includes = function(fn) {
+  return _.some(this.definition.tokens, function(inToken) {
+    return inToken.includes(fn);
+  });
 };
 
-module.exports = Container;
+/**
+ * Returns a clone of this token
+ * @return {appjector.ContainerToken}
+ */
+ContainerToken.prototype.clone = function() {
+  return new ContainerToken(this.name, this.deps, this.definition.clone());
+};
+
+module.exports = ContainerToken;
 </code></pre>
         </article>
     </section>
