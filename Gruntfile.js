@@ -57,7 +57,7 @@ module.exports = function(grunt) {
     },
     jsdoc : {
       appjector : {
-        src : ['index.js', 'src/**/*.js', 'README.md'],
+        src : ['src/**/*.js', 'README.md'],
         options : {
           verbose : true,
           destination : './doc',
@@ -65,6 +65,13 @@ module.exports = function(grunt) {
           template : 'node_modules/jaguarjs-jsdoc',
           private : false
         }
+      }
+    },
+    copy : {
+      img : {
+        files : [
+          {expand : true, src : ['img/**'], dest : 'doc/'}
+        ],
       }
     },
     clean : {
@@ -91,6 +98,6 @@ module.exports = function(grunt) {
   // Default task.
   grunt.registerTask('default', 'watch');
   grunt.registerTask('test', ['jshint', 'clean:tests', 'mochacov']);
-  grunt.registerTask('doc', ['clean:doc', 'jsdoc:appjector']);
+  grunt.registerTask('doc', ['clean:doc', 'jsdoc:appjector', 'copy:img']);
 
 };

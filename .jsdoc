@@ -8,7 +8,7 @@
         },
         "meta" : {
           "title" : "Appjector",
-          "description" : "Appjector is a simple lib that aims to simplify dependencies management and to ease testing for node projects"
+          "description" : "Appjector is a simple lib that aims to simplify dependencies management and to ease testing for modular node projects"
         }
     }
 }

@@ -4,7 +4,7 @@ var assert = require('assert');
 var sinon = require('sinon');
 var _ = require('lodash');
 
-var AppSwitch = require('../index').AppSwitch;
+var AppSwitch = require('../src/appswitch');
 
 describe('testing AppSwitch', function() {
   var appswitch;

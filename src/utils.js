@@ -1,17 +1,17 @@
 'use strict';
 
 var _ = require('lodash');
-var path = require('path');
 var fs = require('fs');
+var path = require('path');
 
 var Token = require('./token');
 
-/** @namespace appjector.utils */
+/** @namespace utils */
 module.exports = {
   /**
-   * Return an array of {@link appjector.Token|tokens} built from files in the given path
+   * Return an array of {@link Token|tokens} built from files in the given path
    * @param {string} basePath The path in which to search (recursive)
-   * @memberof appjector.utils
+   * @memberof utils
   */
   pathToTokens : function pathToTokens(basePath) {
     basePath = fs.realpathSync(basePath);
@@ -33,7 +33,10 @@ module.exports = {
         return tokens;
       }
 
-      return _.union(tokens, [new Token(module, path.basename(file, path.extname(file)))]);
+      var name = path.basename(file, path.extname(file));
+      name = name.replace(/[^\w\d]/g, '');
+
+      return _.union(tokens, [new Token(module, name)]);
     }, []));
   }
 };

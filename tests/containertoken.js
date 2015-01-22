@@ -2,10 +2,10 @@
 
 var assert = require('assert');
 
-var ContainerToken = require('../index').ContainerToken;
-var Definition = require('../index').Definition;
-var Tocken = require('../index').Token;
-var Container = require('../index').Container;
+var ContainerToken = require('../src/containertoken');
+var Definition = require('../src/definition');
+var Tocken = require('../src/token');
+var Container = require('../src/container');
 
 describe('Testing ContainerToken', function() {
   var containerToken, token, subtoken;
@@ -23,30 +23,22 @@ describe('Testing ContainerToken', function() {
     var subContainerToken = new ContainerToken('sub', new Definition([subtoken]));
 
     containerToken = new ContainerToken(
-      'name',
-      ['dep1', 'dep2'],
+      'Name',
       new Definition([
         token,
         subContainerToken
-      ])
+      ]),
+      ['dep1', 'dep2']
     );
   });
 
-  it('should have name', function() {
-    assert.equal(containerToken.name, 'name');
-  });
-
-  it('should have given deps', function() {
-    assert.deepEqual(containerToken.deps, ['dep1', 'dep2']);
-  });
-
   it('should include token and subtoken', function() {
-    assert(containerToken.includes(token.original));
-    assert(containerToken.includes(subtoken.original));
+    assert(containerToken.includes(token.getter));
+    assert(containerToken.includes(subtoken.getter));
   });
 
-  it('should return a container containing the defined token + the required top dependencies', function() {
-    var container = new containerToken.original('dep1', 'dep2');
+  it('should have a getter returning a container containing the defined token + the required top dependencies', function() {
+    var container = containerToken.getter('dep1', 'dep2');
 
     assert(container instanceof Container);
 
@@ -55,18 +47,6 @@ describe('Testing ContainerToken', function() {
     assert.strictEqual(container.get('token'), 'token');
 
     assert.strictEqual(container.get('sub').get('subtoken'), 'subtoken');
-  });
-
-  it('should allow to clone', function() {
-    var clone = containerToken.clone();
-
-    assert.equal(containerToken.name, clone.name);
-    assert.deepEqual(containerToken.deps, clone.deps);
-
-    assert.notEqual(clone.definition, containerToken.definition);
-
-    assert.notEqual(clone.definition.get('token'), containerToken.definition.get('token'));
-    assert.equal(clone.definition.get('token').original, containerToken.definition.get('token').original);
   });
 
 });

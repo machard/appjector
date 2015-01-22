@@ -1,10 +1,9 @@
 'use strict';
 
 var assert = require('assert');
-var _ = require('lodash');
 
-var Definition = require('../index').Definition;
-var Tocken = require('../index').Token;
+var Definition = require('../src/definition');
+var Tocken = require('../src/token');
 
 describe('testing Definition', function() {
 
@@ -20,9 +19,19 @@ describe('testing Definition', function() {
     assert.equal(definition.get('token2'), token2);
   });
 
+  it('should return the name of all tokens', function() {
+    var token = new Tocken(function() {}, 'token');
+    var token1 = new Tocken(function() {}, 'token1');
+    var token2 = new Tocken(function() {}, 'token2');
+
+    var definition = new Definition(token1, [token2, token]);
+
+    assert.deepEqual(definition.names(), ['token1', 'token2', 'token']);
+  });
+
   it('should keep the last token wrapping a given fn', function() {
     var token1 = new Tocken(function() {}, 'token1');
-    var token2 = new Tocken(token1.original, 'token2');
+    var token2 = new Tocken(token1.getter, 'token2');
 
     var definition = new Definition([token1, token2]);
 
@@ -46,7 +55,7 @@ describe('testing Definition', function() {
 
   it('should keep the last token added wrapping a given fn', function() {
     var token1 = new Tocken(function() {}, 'token1');
-    var token2 = new Tocken(token1.original, 'token2');
+    var token2 = new Tocken(token1.getter, 'token2');
 
     var definition = new Definition(token1);
 
@@ -54,40 +63,5 @@ describe('testing Definition', function() {
 
     assert(!definition.get('token1'));
     assert(definition.get('token2'));
-  });
-
-  it('should allow to replace a token', function() {
-    var definition = new Definition(new Tocken(function() {}, 'replace'));
-
-    var replace = new Tocken(function() {}, 'replace');
-
-    definition.replace(replace);
-
-    assert.strictEqual(definition.get('replace'), replace);
-  });
-
-  it('should throw if replacing a non existant token', function() {
-    var definition = new Definition();
-
-    assert.throws(function() {
-      definition.replace(new Tocken(_.noop, 'replace'));
-    });
-  });
-
-  it('should clone definition', function() {
-    var token1 = new Tocken(function() {}, 'token1');
-    var token2 = new Tocken(function() {}, 'token2');
-
-    var definition = new Definition(token1, token2);
-
-    var newDefinition = definition.clone();
-
-    assert.notEqual(newDefinition, definition);
-
-    assert(definition.get('token1'));
-    assert(definition.get('token2'));
-
-    assert.notEqual(definition.get('token1'), newDefinition.get('token1'));
-    assert.notEqual(definition.get('token2'), newDefinition.get('token2'));
   });
 });

@@ -1,9 +1,17 @@
 {
   "name": "appjector",
-  "version": "1.1.2",
-  "description": "Appjector is a simple lib that aims to simplify dependencies management and to ease testing for node projects",
-  "keywords" : ["dependency injection", "container", "service location", "component", "module", "injection", "dependency"],
-  "main": "index.js",
+  "version": "1.2.0",
+  "description": "Appjector is a simple lib that aims to simplify dependencies management and to ease testing for modular node projects",
+  "keywords": [
+    "dependency injection",
+    "container",
+    "service location",
+    "component",
+    "module",
+    "injection",
+    "dependency"
+  ],
+  "main": "src/appjector.js",
   "scripts": {
     "test": "grunt test"
   },
@@ -27,6 +35,7 @@
   "devDependencies": {
     "grunt": "0.4.5",
     "grunt-contrib-clean": "0.6.0",
+    "grunt-contrib-copy": "0.7.0",
     "grunt-contrib-jshint": "0.10.0",
     "grunt-contrib-watch": "0.6.1",
     "grunt-gh-pages": "0.9.1",

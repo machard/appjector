@@ -4,12 +4,12 @@ var assert = require('assert');
 var sinon = require('sinon');
 var _ = require('lodash');
 
-var Container = require('../index').Container;
-var Tocken = require('../index').Token;
-var Definition = require('../index').Definition;
+var Container = require('../src/container');
+var Tocken = require('../src/token');
+var Definition = require('../src/definition');
 
 describe('testing Container', function() {
-  it('should throw an error if multiple token have the same name (case insensitive)', function() {
+  it('should throw an error if multiple token have the same name', function() {
     assert.throws(function() {
       new Container(new Definition([
         new Tocken(function() {}, 'name'), new Tocken(function() {}, 'name')
@@ -17,35 +17,39 @@ describe('testing Container', function() {
     });
   });
 
+  it('should throw an error if multiple token and/or dependencies have the same name', function() {
+    assert.throws(function() {
+      new Container(new Definition([
+        new Tocken(function() {}, 'name'), new Tocken(function() {}, 'name2')
+      ]), {'name' : {}});
+    });
+  });
+
   context('when instancied correctly', function() {
     var container, spies;
 
     beforeEach(function() {
-      spies = _.object(_.map(['main', 'dep', 'klass'], function(name) {
+      spies = _.object(_.map(['main', 'dep', 'Klass'], function(name) {
         return [name, sinon.spy(function() {
           return {name : name};
         })];
       }));
 
       container = new Container(new Definition([
-        new Tocken(function main(dep) {
+        new Tocken(function(extra, dep) {
           return spies.main(dep);
-        }),
-        new Tocken(function dep() {
+        }, 'main'),
+        new Tocken(function() {
           return spies.dep();
-        }),
-        new Tocken(spies.klass, 'Klass')
-      ]));
+        }, 'dep'),
+        new Tocken(spies.Klass, 'Klass')
+      ]), {extra : 'pouet'});
     });
 
     it('should throw error if asking for a non existent token', function() {
       assert.throws(function() {
         container.get('nonexistent');
       });
-    });
-
-    it('should return the asked instanciated token no matter the name case', function() {
-      assert.strictEqual(container.get('dEp').name, 'dep');
     });
 
     it('should inject dependency value', function() {
@@ -57,13 +61,8 @@ describe('testing Container', function() {
       assert.strictEqual(container.get('dep'), container.get('dep'));
     });
 
-    it('should instantiate using new if the token is a constructor', function() {
-      container.get('klass');
-      assert(spies.klass.calledWithNew());
-    });
-
     it('should instantiate every token', function() {
-      container.instantiate();
+      container.run();
       _.each(spies, function(spy) {
         assert(spy.calledOnce);
       });
@@ -81,12 +80,12 @@ describe('testing Container', function() {
       }));
 
       container = new Container(new Definition([
-        new Tocken(function cyclic1(cyclic2) {
+        new Tocken(function(cyclic2) {
           return spies.cyclic1(cyclic2);
-        }),
-        new Tocken(function cyclic2(cyclic1) {
+        }, 'cyclic1'),
+        new Tocken(function(cyclic1) {
           return spies.cyclic2(cyclic1);
-        })
+        }, 'cyclic2')
       ]));
     });
 
@@ -98,7 +97,7 @@ describe('testing Container', function() {
 
     it('should throw error when instantiate find a cyclic dependency', function() {
       assert.throws(function() {
-        container.instantiate();
+        container.run();
       });
     });
   });
