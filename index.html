@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Appjector</title>
     
-    <meta name="description" content="Appjector is a simple lib that aims to simplify dependencies management and to ease testing for node projects" />
+    <meta name="description" content="Appjector is a simple lib that aims to simplify dependencies management and to ease testing for modular node projects" />
     
     
     
@@ -20,7 +20,7 @@
     
     
     <script>
-    var config = {"monospaceLinks":false,"cleverLinks":false,"applicationName":"Appjector","linenums":true,"github":"machard/appjector","default":{"outputSourceFiles":true},"meta":{"title":"Appjector","description":"Appjector is a simple lib that aims to simplify dependencies management and to ease testing for node projects"}};
+    var config = {"monospaceLinks":false,"cleverLinks":false,"applicationName":"Appjector","linenums":true,"github":"machard/appjector","default":{"outputSourceFiles":true},"meta":{"title":"Appjector","description":"Appjector is a simple lib that aims to simplify dependencies management and to ease testing for modular node projects"}};
     </script>
     
 
@@ -55,15 +55,21 @@
             </ul>
             <ul class="methods itemMembers">
             
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="appjector.container"><a href="appjector.html#container">container</a></li>
+            
+                <li data-name="appjector.isolate"><a href="appjector.html#isolate">isolate</a></li>
+            
             </ul>
             <ul class="events itemMembers">
             
             </ul>
         </li>
     
-        <li class="item" data-name="appjector.utils">
+        <li class="item" data-name="utils">
             <span class="title">
-                <a href="appjector.utils.html">appjector.utils</a>
+                <a href="utils.html">utils</a>
                 
                 <span class="static">static</span>
                 
@@ -78,7 +84,7 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="appjector.utils.pathToTokens"><a href="appjector.utils.html#pathToTokens">pathToTokens</a></li>
+                <li data-name="utils.pathToTokens"><a href="utils.html#pathToTokens">pathToTokens</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -121,9 +127,9 @@
             </ul>
         </li>
     
-        <li class="item" data-name="appjector.Container">
+        <li class="item" data-name="Container">
             <span class="title">
-                <a href="appjector.Container.html">appjector.Container</a>
+                <a href="Container.html">Container</a>
                 
             </span>
             <ul class="members itemMembers">
@@ -136,9 +142,9 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="appjector.Container#get"><a href="appjector.Container.html#get">get</a></li>
+                <li data-name="Container#get"><a href="Container.html#get">get</a></li>
             
-                <li data-name="appjector.Container#instantiate"><a href="appjector.Container.html#instantiate">instantiate</a></li>
+                <li data-name="Container#run"><a href="Container.html#run">run</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -146,24 +152,22 @@
             </ul>
         </li>
     
-        <li class="item" data-name="appjector.ContainerToken">
+        <li class="item" data-name="ContainerToken">
             <span class="title">
-                <a href="appjector.ContainerToken.html">appjector.ContainerToken</a>
+                <a href="ContainerToken.html">ContainerToken</a>
                 
             </span>
             <ul class="members itemMembers">
             
             <span class="subtitle">Members</span>
             
-                <li data-name="appjector.ContainerToken#definition"><a href="appjector.ContainerToken.html#definition">definition</a></li>
+                <li data-name="ContainerToken#definition"><a href="ContainerToken.html#definition">definition</a></li>
             
-                <li data-name="appjector.ContainerToken#deps"><a href="appjector.ContainerToken.html#deps">deps</a></li>
+                <li data-name="ContainerToken#getter"><a href="ContainerToken.html#getter">getter</a></li>
             
-                <li data-name="appjector.ContainerToken#isConstructor"><a href="appjector.ContainerToken.html#isConstructor">isConstructor</a></li>
+                <li data-name="ContainerToken#name"><a href="ContainerToken.html#name">name</a></li>
             
-                <li data-name="appjector.ContainerToken#name"><a href="appjector.ContainerToken.html#name">name</a></li>
-            
-                <li data-name="appjector.ContainerToken#original"><a href="appjector.ContainerToken.html#original">original</a></li>
+                <li data-name="ContainerToken#require"><a href="ContainerToken.html#require">require</a></li>
             
             </ul>
             <ul class="typedefs itemMembers">
@@ -173,9 +177,7 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="appjector.ContainerToken#clone"><a href="appjector.ContainerToken.html#clone">clone</a></li>
-            
-                <li data-name="appjector.ContainerToken#includes"><a href="appjector.ContainerToken.html#includes">includes</a></li>
+                <li data-name="ContainerToken#includes"><a href="ContainerToken.html#includes">includes</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -183,16 +185,16 @@
             </ul>
         </li>
     
-        <li class="item" data-name="appjector.Definition">
+        <li class="item" data-name="Definition">
             <span class="title">
-                <a href="appjector.Definition.html">appjector.Definition</a>
+                <a href="Definition.html">Definition</a>
                 
             </span>
             <ul class="members itemMembers">
             
             <span class="subtitle">Members</span>
             
-                <li data-name="appjector.Definition#tokens"><a href="appjector.Definition.html#tokens">tokens</a></li>
+                <li data-name="Definition#tokens"><a href="Definition.html#tokens">tokens</a></li>
             
             </ul>
             <ul class="typedefs itemMembers">
@@ -202,13 +204,11 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="appjector.Definition#clone"><a href="appjector.Definition.html#clone">clone</a></li>
+                <li data-name="Definition#get"><a href="Definition.html#get">get</a></li>
             
-                <li data-name="appjector.Definition#get"><a href="appjector.Definition.html#get">get</a></li>
+                <li data-name="Definition#names"><a href="Definition.html#names">names</a></li>
             
-                <li data-name="appjector.Definition#push"><a href="appjector.Definition.html#push">push</a></li>
-            
-                <li data-name="appjector.Definition#replace"><a href="appjector.Definition.html#replace">replace</a></li>
+                <li data-name="Definition#push"><a href="Definition.html#push">push</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -216,22 +216,20 @@
             </ul>
         </li>
     
-        <li class="item" data-name="appjector.Token">
+        <li class="item" data-name="Token">
             <span class="title">
-                <a href="appjector.Token.html">appjector.Token</a>
+                <a href="Token.html">Token</a>
                 
             </span>
             <ul class="members itemMembers">
             
             <span class="subtitle">Members</span>
             
-                <li data-name="appjector.Token#deps"><a href="appjector.Token.html#deps">deps</a></li>
+                <li data-name="Token#getter"><a href="Token.html#getter">getter</a></li>
             
-                <li data-name="appjector.Token#isConstructor"><a href="appjector.Token.html#isConstructor">isConstructor</a></li>
+                <li data-name="Token#name"><a href="Token.html#name">name</a></li>
             
-                <li data-name="appjector.Token#name"><a href="appjector.Token.html#name">name</a></li>
-            
-                <li data-name="appjector.Token#original"><a href="appjector.Token.html#original">original</a></li>
+                <li data-name="Token#require"><a href="Token.html#require">require</a></li>
             
             </ul>
             <ul class="typedefs itemMembers">
@@ -241,9 +239,7 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="appjector.Token#clone"><a href="appjector.Token.html#clone">clone</a></li>
-            
-                <li data-name="appjector.Token#includes"><a href="appjector.Token.html#includes">includes</a></li>
+                <li data-name="Token#includes"><a href="Token.html#includes">includes</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -277,306 +273,55 @@
 
     <section>
         <article class="readme"><h1>Appjector</h1>
-<p><em>Appjector</em> is a simple lib that aims to <strong>simplify dependencies management</strong> and to <strong>ease testing</strong> for node projects</p>
+<p><em>Appjector</em> is a simple lib that aims to <strong>simplify dependencies management</strong> and to <strong>ease testing</strong> for <strong>modular</strong> node projects</p>
 <p><a href="https://travis-ci.org/machard/appjector"><img src="https://travis-ci.org/machard/appjector.svg?branch=master" alt="Build Status"></a>
 <a href="https://coveralls.io/r/machard/appjector?branch=master"><img src="https://coveralls.io/repos/machard/appjector/badge.svg?branch=master" alt="Coverage Status"></a>
 <a href="http://badge.fury.io/js/appjector"><img src="https://badge.fury.io/js/appjector.svg" alt="npm version"></a>
 <a href="https://david-dm.org/machard/appjector"><img src="https://david-dm.org/machard/appjector.svg" alt="Dependency Status"></a>
 <a href="https://david-dm.org/machard/appjector#info=devDependencies"><img src="https://david-dm.org/machard/appjector/dev-status.svg" alt="devDependency Status"></a></p>
-<blockquote>
-<p><strong>Objectives:</strong></p>
-<ul>
-<li>Dependency injection and localization</li>
-<li>Limit duplication of declaration/naming</li>
-<li>Allow asynchronous start/stop logic</li>
-<li>Allow modular code organization</li>
-<li>Allow easy files relocations</li>
-<li>Allow easy unit and integration tests</li>
-</ul>
-</blockquote>
+<p><img src="./img/cover.png" alt="cover"></p>
 <hr>
 <h2>Bootstrap an application</h2>
+<p>the simple way</p>
 <pre><code>//index.js
 
 'use strict';
 
 var appjector = require('appjector');
 
-// create the app definition
-var definition = new appjector.Definition(
-  // add components located in the app path
-  appjector.utils.pathToTokens('./app')
-);
-
-// create a container from the app definition
-var appContainer = new appjector.Container(definition);
-
-// instantiate every components
-appContainer.instantiate();</code></pre>
+appjector
+  .container('./app')
+  .run();</code></pre>
 <hr>
-<h2>Component file format</h2>
+<h2>File format</h2>
 <blockquote>
 <p><strong>Principles:</strong></p>
 <ul>
-<li>One component per file</li>
-<li>A component exports an anonymous function</li>
-<li>The function arguments define the required dependencies</li>
 <li>The filename defines the component's name</li>
+<li>Exports an anonymous function</li>
+<li>The function arguments define the required dependencies</li>
+<li>The function returns the component's value</li>
 </ul>
 </blockquote>
-<p><strong>Classes</strong> : the function will be called with <strong>new</strong>. A component is tagged so <strong>if it has a prototype or if it's name start with an upper cased letter</strong>.</p>
-<pre><code>// app/Class.js
-
-'use strict';
-
-module.exports = function(dep1, dep2, Dep3) {
-    this.a = ...
-};
-
-module.exports.prototype.method = function() {
-    ...
-};</code></pre>
-<p><strong>Factories</strong> : the function explicitely <strong>returns the component value</strong></p>
-<pre><code>// app/factory
-
-'use strict';
-
-module.exports = function(dep1, dep2, Dep3) {
-    return {};
-};</code></pre>
-<blockquote>
-<p><strong>Be aware</strong> that <strong>defining a component dependency</strong> in function arguments <strong>is case insentive</strong>. </p>
-</blockquote>
-<p>This allows to <strong>respect strict mode</strong> : </p>
-<ul>
-<li><strong>an instance</strong> of a <strong>Class</strong> component needs to <strong>have it's first letter lower cased</strong></li>
-<li>the <strong>result</strong> of a <strong>factory returning a constructor</strong> should <strong>have it's first letter upper cased</strong></li>
-</ul>
-<pre><code>// assuming that other components are named Class
-// and constructorFactory (function(){return Constructor;})
-
-'use strict';
-
-module.exports = function(class, ConstructorFactory) {
-    // class is the instance of Class
-    class.echo();
-
-    // ConstructorFactory is the Constructor returned by constructorFactory
-    var constructorFactoryInstance = new ConstructorFactory();
-};</code></pre>
-<hr>
-<h2>Using ContainerToken</h2>
-<blockquote>
-<p><strong>Objectives:</strong></p>
-<ul>
-<li>Provide a component that is an independant container</li>
-<li>Access dependencies of the parent container</li>
-<li>Have a no dependency conflict with other containers</li>
-</ul>
-</blockquote>
-<p>This <strong>feature</strong> allows to <strong>define submodules</strong> withtin the app. Everything is done when bootstrapping so you have a <strong>centralized place for understanding the dependencies map of your app</strong>.</p>
 <pre><code>'use strict';
 
-var appjector = require('appjector');
-
-// global app definition
-var definition = new appjector.Definition(
-  appjector.utils.pathToTokens('./app'),
-
-  // Add a module
-  new appjector.ContainerToken(
-
-      // name
-    'Auth',
-
-    // string dependencies available in the containing definition
-    // that we want to access from the sub module
-    ['conf', 'mongoose', 'server'],
-
-    // definition of the module
-    new appjector.Definition(
-      // path of this module
-      appjector.utils.pathToTokens('./app/auth'),
-
-      //you can even add sub modules
-      new appjector.ContainerToken(
-        'rules',
-        new appjector.Definition(
-          appjector.utils.pathToTokens('./app/auth/middlewares/authorizations')
-        )
-      )
-    )
-  )
-
-  // Other modules
-  // ...
-);
-
-
-//start the app
-var appContainer = new appjector.Container(definition);
-
-appContainer.instantiate();</code></pre>
-<blockquote>
-<p><strong>Quick note</strong> : When <strong>adding tokens to a definition</strong> you need to care about <strong>order</strong> : <strong>if multiple tokens include the same component function, only the last one will be kept</strong>.</p>
-</blockquote>
-<p>Exemple of an Auth module's component :</p>
-<pre><code>// app/auth/routes/user.js
-// this component is part of the Auth module/container
-
-'use strict';
-
-module.exports = function(server, rules, User) {
-    // server : the top container's component declared as a dependency of the Auth module
-    // rules : the defined sub module of Auth module
-    // User : a specific Auth component (located for ex in app/auth/models/user.js)
-
-    // access submodules components using `get`
-    rules.get('registeredOnly');
+module.exports = function(dep1, dep2, Dep3) {)
+    return {} // or Class, [], 'hello', fn ...;
 };</code></pre>
 <hr>
-<h2>A word on testing</h2>
-<blockquote>
-<p><strong>Objectives:</strong></p>
-<ul>
-<li>Allow testing against the whole app</li>
-<li>Allow testing of a single component</li>
-<li>Allow to rapidly enable/disable mocking of components</li>
-</ul>
-</blockquote>
-<pre><code>var MockComponent = function() {
-    this.hello = function() {
-        return 'hi';
-    }
-};
-
-describe('testing whole app', function() {
-  var container;
-
-  before(function(done) {
-    // create a copy of appDefinition
-    var def = appDefinition.clone();
-
-    // mocking ComponentToMock by MockComponent
-    def.replace(new appjector.Token(MockComponent, 'ComponentToMock'));
-
-    // -- OR --
-    // mocking ComponentToMock by MockComponent in submodule
-    def.get('submodule').replace(new appjector.Token(MockComponent, 'ComponentToMock'));
-
-    // start
-    container = new appjector.Container(def);
-    container.instantiate();
-  });
-
-  it('should ...', function(done) {
-    request(/*...*/);
-  });
-
-  after(function(done) {
-    // optionnaly launch stop process in order to be back
-    // at initial state
-    container.get('appswitch').stop(done);
-  });
-});
-
-describe('testing Component', function() {
-  var component;
-
-  beforeEach(function() {
-    // create a copy of appDefinition
-    var def = appDefinition.clone();
-
-    // mocking ComponentToMock by MockComponent
-    def.replace(new appjector.Token(MockComponent, 'ComponentToMock'));
-
-    // -- OR --
-    // mocking ComponentToMock by MockComponent in submodule
-    def.get('submodule').replace(new appjector.Token(MockComponent, 'ComponentToMock'));
-
-    // creating a new container
-    var container = new appjector.Container(def);
-
-    // instantiate and get the tested component
-    // MockComponent instance will be passed to Component
-    // in place of ComponentToMock's one
-    component = container.get('component');
-
-    // -- OR --
-    // instantiate and get the tested component of submodule
-    // MockComponent instance will be passed to Component
-    // in place of ComponentToMock's one
-    component = container.get('submodule').get('component');
-  });
-
-  it('should ...', function() {
-    //...
-  });
-
-});</code></pre>
-<p><strong>Quick notes :</strong></p>
-<p>This is intented to be an overview of how mocking and component isolation can be handled.</p>
-<p>Tests organization should take advantage of appjector too, the very first component being the factory that returns the app definition :).</p>
+<h2>Defining modules</h2>
+<p>Have a look at how <code>appjector.container</code> works <a href="http://github.com/machard/blob/master/appjector.container.md">here</a></p>
 <hr>
-<h2>The AppSwitch component</h2>
-<blockquote>
-<p><strong>Principles:</strong></p>
-<ul>
-<li>Each component can define an asynchronous start/stop process</li>
-<li>Order start/stop processes executions</li>
-</ul>
-</blockquote>
-<p>First you need to add the component during the bootstraping phase</p>
-<pre><code>//index.js
-
-'use strict';
-
-var appjector = require('appjector');
-
-var definition = new appjector.Definition(
-  appjector.utils.pathToTokens('./app'),
-
-  // add the addswitch component
-  new appjector.Token(appjector.AppSwitch)
-);
-
-var appContainer = new appjector.Container(definition);
-appContainer.instantiate();
-
-// use the component to launch process
-appContainer.get('appswitch').start(function(err) {
-  if (err) {
-    return console.log('app start failed');
-  }
-
-  console.log('app started');
-});</code></pre>
-<p>then declare handlers in components</p>
-<pre><code>'use strict';
-
-module.exports = function(dep1, appSwitch, dep2) {
-    // as dep1 and dep2 are defined as dependencies 
-    // their eventual start/stop handlers will be executed
-    // before the ones below
-
-    appSwitch.onStart(function(callback) {
-        ...
-    });
-
-    appSwitch.onStop(function(callback) {
-        ...
-    });
-}</code></pre>
+<h2>Add asynchronous start/stop logics</h2>
+<p>Have a look at how <code>appjector.AppSwitch</code> helper works <a href="http://github.com/machard/blob/master/appjector.AppSwitch.md">here</a></p>
 <hr>
-<h2>API</h2>
-<p>Full documentation can be seen <a href="http://machard.github.com/appjector">here</a></p>
+<h2>How to unit test</h2>
+<p>Have a look at how <code>appjector.isolate</code> works <a href="http://github.com/machard/blob/master/appjector.isolate.md">here</a></p>
 <hr>
-<h2>Coming next</h2>
+<h2>More</h2>
 <ul>
-<li>App example</li>
-<li><strong>An helper to have a declarative way of doing bootstraping</strong></li>
-<li>Review AppSwitch component functionality</li>
-<li>Possibility to define multiple components per file (exports.component1 = ...)</li>
+<li>Full documentation can be seen <a href="http://machard.github.com/appjector">here</a></li>
+<li>Backlog can be seen <a href="http://github.com/machard/blob/master/backlog.md">here</a></li>
 </ul>
 <hr></article>
     </section>
@@ -589,7 +334,7 @@ module.exports = function(dep1, appSwitch, dep2) {
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Wed Jan 21 2015 22:23:59 GMT-0000 (UTC)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Tue Feb 03 2015 13:40:06 GMT-0000 (UTC)
         </footer>
     </div>
 </div>

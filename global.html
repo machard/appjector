@@ -248,81 +248,327 @@
     </ul>
 </div>
     <div class="main">
-        <h1 class="page-title" data-filename="container.js.html">Source: container.js</h1>
+        <h1 class="page-title" data-filename="global.html">Global</h1>
         
 
 
+
+<section>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>'use strict';
+<header>
+    <h2>
+    
+    </h2>
+    
+</header>  
 
-var _ = require('lodash');
+<article>
+    <div class="container-overview">
+    
+    
+    
+        
+        
+        
+<dl class="details">
+    
+        
+    
+    
+    
 
-/**
- * A Container is in charge of getting components value from {@link Token|tokens}
- * @class
- * @param {Definition} definition the definition on which the container is based
- * @param {DependenciesNameValueMap} [dependencies] optional external dependencies
- */
-function Container(definition, dependencies) {
-  var tokenNames = definition.names().concat(_.keys(dependencies));
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
 
-  if (tokenNames.length > _.uniq(tokenNames).length) {
-    throw new Error('multiple tokens have the same name');
-  }
+        
+        
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        <h3 class="subsection-title">Type Definitions</h3>
+        
+        <dl>
+                
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="DependenciesNameValueMap">DependenciesNameValueMap<span class="type-signature type object.<string, object|function|string|number|array>">Object.&lt;string, (Object|function()|string|number|array)></span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
 
-  this.definition = definition;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
 
-  this.cache = dependencies || {};
-  this.resolving = [];
-}
+    
+    
+</dd>
 
-/**
- * run every {@link Token|tokens} of this container
- * @return {Container} the instance on which this method is called
- */
-Container.prototype.run = function() {
-  _.each(this.definition.names(), this.get, this);
-  return this;
-};
+            
+                
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="ModuleConfig">ModuleConfig<span class="type-signature type object">Object</span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    
+    
+<dl class="details">
+    
+        
+        <h5 class="subsection-title">Properties:</h5>
+        
+        <dl>
 
-/**
- * Return the value associated with the {@link Token|token}
- * @param {string} tokenName
- * @return {Object|function|Number|array}
- */
-Container.prototype.get = function(tokenName) {
-  if (this.cache[tokenName]) {
-    return this.cache[tokenName];
-  }
+<table class="props">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		<th>Argument</th>
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>require</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string[]</span>
 
-  var token = this.definition.get(tokenName);
 
-  if (!token) {
-    throw new Error('Unknown token name ' +  tokenName);
-  }
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">names of the required dependencies</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>dependencies</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#DependenciesNameValueMap">DependenciesNameValueMap</a></span>
 
-  if (this.resolving.indexOf(token) > -1) {
-    throw new Error('Cyclic dependency for ' + tokenName);
-  }
 
-  this.resolving.push(token);
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">Map name -> value of manually defined dependencies</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>modules</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#ModulesPathConfigMap">ModulesPathConfigMap</a></span>
 
-  var deps = _.map(token.require, this.get, this);
 
-  this.cache[tokenName] = token.getter.apply(null, deps);
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">Submodules configuration map</td>
+        </tr>
+	
+	
+	</tbody>
+</table></dl>
+        
+    
+        
+    
+    
+    
 
-  this.resolving = _.without(this.resolving, token);
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
 
-  return this.cache[tokenName];
-};
+    
+    
+</dd>
 
-module.exports = Container;
-</code></pre>
-        </article>
-    </section>
+            
+                
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="ModulesPathConfigMap">ModulesPathConfigMap<span class="type-signature type object.<string, moduleconfig>">Object.&lt;string, <a href="global.html#ModuleConfig">ModuleConfig</a>></span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+            </dl>
+    
+    
+    
+</article>
+
+</section>  
 
 
 

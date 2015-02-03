@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Appjector</title>
     
-    <meta name="description" content="Appjector is a simple lib that aims to simplify dependencies management and to ease testing for node projects" />
+    <meta name="description" content="Appjector is a simple lib that aims to simplify dependencies management and to ease testing for modular node projects" />
     
     
     
@@ -20,7 +20,7 @@
     
     
     <script>
-    var config = {"monospaceLinks":false,"cleverLinks":false,"applicationName":"Appjector","linenums":true,"github":"machard/appjector","default":{"outputSourceFiles":true},"meta":{"title":"Appjector","description":"Appjector is a simple lib that aims to simplify dependencies management and to ease testing for node projects"}};
+    var config = {"monospaceLinks":false,"cleverLinks":false,"applicationName":"Appjector","linenums":true,"github":"machard/appjector","default":{"outputSourceFiles":true},"meta":{"title":"Appjector","description":"Appjector is a simple lib that aims to simplify dependencies management and to ease testing for modular node projects"}};
     </script>
     
 
@@ -53,15 +53,21 @@
             </ul>
             <ul class="methods itemMembers">
             
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="appjector.container"><a href="appjector.html#container">container</a></li>
+            
+                <li data-name="appjector.isolate"><a href="appjector.html#isolate">isolate</a></li>
+            
             </ul>
             <ul class="events itemMembers">
             
             </ul>
         </li>
     
-        <li class="item" data-name="appjector.utils">
+        <li class="item" data-name="utils">
             <span class="title">
-                <a href="appjector.utils.html">appjector.utils</a>
+                <a href="utils.html">utils</a>
                 
                 <span class="static">static</span>
                 
@@ -76,7 +82,7 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="appjector.utils.pathToTokens"><a href="appjector.utils.html#pathToTokens">pathToTokens</a></li>
+                <li data-name="utils.pathToTokens"><a href="utils.html#pathToTokens">pathToTokens</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -119,9 +125,9 @@
             </ul>
         </li>
     
-        <li class="item" data-name="appjector.Container">
+        <li class="item" data-name="Container">
             <span class="title">
-                <a href="appjector.Container.html">appjector.Container</a>
+                <a href="Container.html">Container</a>
                 
             </span>
             <ul class="members itemMembers">
@@ -134,9 +140,9 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="appjector.Container#get"><a href="appjector.Container.html#get">get</a></li>
+                <li data-name="Container#get"><a href="Container.html#get">get</a></li>
             
-                <li data-name="appjector.Container#instantiate"><a href="appjector.Container.html#instantiate">instantiate</a></li>
+                <li data-name="Container#run"><a href="Container.html#run">run</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -144,24 +150,22 @@
             </ul>
         </li>
     
-        <li class="item" data-name="appjector.ContainerToken">
+        <li class="item" data-name="ContainerToken">
             <span class="title">
-                <a href="appjector.ContainerToken.html">appjector.ContainerToken</a>
+                <a href="ContainerToken.html">ContainerToken</a>
                 
             </span>
             <ul class="members itemMembers">
             
             <span class="subtitle">Members</span>
             
-                <li data-name="appjector.ContainerToken#definition"><a href="appjector.ContainerToken.html#definition">definition</a></li>
+                <li data-name="ContainerToken#definition"><a href="ContainerToken.html#definition">definition</a></li>
             
-                <li data-name="appjector.ContainerToken#deps"><a href="appjector.ContainerToken.html#deps">deps</a></li>
+                <li data-name="ContainerToken#getter"><a href="ContainerToken.html#getter">getter</a></li>
             
-                <li data-name="appjector.ContainerToken#isConstructor"><a href="appjector.ContainerToken.html#isConstructor">isConstructor</a></li>
+                <li data-name="ContainerToken#name"><a href="ContainerToken.html#name">name</a></li>
             
-                <li data-name="appjector.ContainerToken#name"><a href="appjector.ContainerToken.html#name">name</a></li>
-            
-                <li data-name="appjector.ContainerToken#original"><a href="appjector.ContainerToken.html#original">original</a></li>
+                <li data-name="ContainerToken#require"><a href="ContainerToken.html#require">require</a></li>
             
             </ul>
             <ul class="typedefs itemMembers">
@@ -171,9 +175,7 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="appjector.ContainerToken#clone"><a href="appjector.ContainerToken.html#clone">clone</a></li>
-            
-                <li data-name="appjector.ContainerToken#includes"><a href="appjector.ContainerToken.html#includes">includes</a></li>
+                <li data-name="ContainerToken#includes"><a href="ContainerToken.html#includes">includes</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -181,16 +183,16 @@
             </ul>
         </li>
     
-        <li class="item" data-name="appjector.Definition">
+        <li class="item" data-name="Definition">
             <span class="title">
-                <a href="appjector.Definition.html">appjector.Definition</a>
+                <a href="Definition.html">Definition</a>
                 
             </span>
             <ul class="members itemMembers">
             
             <span class="subtitle">Members</span>
             
-                <li data-name="appjector.Definition#tokens"><a href="appjector.Definition.html#tokens">tokens</a></li>
+                <li data-name="Definition#tokens"><a href="Definition.html#tokens">tokens</a></li>
             
             </ul>
             <ul class="typedefs itemMembers">
@@ -200,13 +202,11 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="appjector.Definition#clone"><a href="appjector.Definition.html#clone">clone</a></li>
+                <li data-name="Definition#get"><a href="Definition.html#get">get</a></li>
             
-                <li data-name="appjector.Definition#get"><a href="appjector.Definition.html#get">get</a></li>
+                <li data-name="Definition#names"><a href="Definition.html#names">names</a></li>
             
-                <li data-name="appjector.Definition#push"><a href="appjector.Definition.html#push">push</a></li>
-            
-                <li data-name="appjector.Definition#replace"><a href="appjector.Definition.html#replace">replace</a></li>
+                <li data-name="Definition#push"><a href="Definition.html#push">push</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -214,22 +214,20 @@
             </ul>
         </li>
     
-        <li class="item" data-name="appjector.Token">
+        <li class="item" data-name="Token">
             <span class="title">
-                <a href="appjector.Token.html">appjector.Token</a>
+                <a href="Token.html">Token</a>
                 
             </span>
             <ul class="members itemMembers">
             
             <span class="subtitle">Members</span>
             
-                <li data-name="appjector.Token#deps"><a href="appjector.Token.html#deps">deps</a></li>
+                <li data-name="Token#getter"><a href="Token.html#getter">getter</a></li>
             
-                <li data-name="appjector.Token#isConstructor"><a href="appjector.Token.html#isConstructor">isConstructor</a></li>
+                <li data-name="Token#name"><a href="Token.html#name">name</a></li>
             
-                <li data-name="appjector.Token#name"><a href="appjector.Token.html#name">name</a></li>
-            
-                <li data-name="appjector.Token#original"><a href="appjector.Token.html#original">original</a></li>
+                <li data-name="Token#require"><a href="Token.html#require">require</a></li>
             
             </ul>
             <ul class="typedefs itemMembers">
@@ -239,9 +237,7 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="appjector.Token#clone"><a href="appjector.Token.html#clone">clone</a></li>
-            
-                <li data-name="appjector.Token#includes"><a href="appjector.Token.html#includes">includes</a></li>
+                <li data-name="Token#includes"><a href="Token.html#includes">includes</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -252,27 +248,197 @@
     </ul>
 </div>
     <div class="main">
-        <h1 class="page-title" data-filename="index.js.html">Source: index.js</h1>
+        <h1 class="page-title" data-filename="utils.html">Namespace: utils</h1>
         
 
 
+
+<section>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>'use strict';
+<header>
+    <h2>
+    utils
+    </h2>
+    
+</header>  
 
-/** @namespace appjector */
+<article>
+    <div class="container-overview">
+    
+    
+    
+        
+        
+        
+<dl class="details">
+    
+        
+    
+    
+    
 
-exports.Container = require('./src/container');
-exports.Token = require('./src/token');
-exports.ContainerToken = require('./src/containertoken');
-exports.Definition = require('./src/definition');
-exports.AppSwitch = require('./src/appswitch');
-exports.utils = require('./src/utils');
-</code></pre>
-        </article>
-    </section>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
 
+        
+        
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        <h3 class="subsection-title">Methods</h3>
+        
+        <dl>
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="pathToTokens">
+            
+            <span class="type-signature static">static</span>utils.pathToTokens<span class="signature">(basePath)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line16">line 16</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Return an array of <a href="Token.html">tokens</a> built from files in the given path
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>basePath</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                The path in which to search (recursive)</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        </dl>
+    
+    
+    
+    
+    
+</article>
+
+</section>  
 
 
 
@@ -281,7 +447,7 @@ exports.utils = require('./src/utils');
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Wed Jan 21 2015 22:23:59 GMT-0000 (UTC)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Tue Feb 03 2015 13:40:07 GMT-0000 (UTC)
         </footer>
     </div>
 </div>
