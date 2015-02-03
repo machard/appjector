@@ -1,6 +1,6 @@
 {
   "name": "appjector",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Appjector is a simple lib that aims to simplify dependencies management and to ease testing for modular node projects",
   "keywords": [
     "dependency injection",

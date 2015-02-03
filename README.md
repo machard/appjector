@@ -18,7 +18,7 @@ Bootstrap an application
 
 the simple way
 
-<pre lang="javascript">
+```javascript
 //index.js
 
 'use strict';
@@ -29,11 +29,9 @@ appjector
   .container('./app')
   .run();
 
-</pre>
-
+```
 
 ----------
-
 
 File format
 -------------
@@ -46,13 +44,13 @@ File format
 > - The function returns the component's value
 
 
-<pre lang="javascript">
+```javascript
 'use strict';
 
 module.exports = function(dep1, dep2, Dep3) {)
 	return {} // or Class, [], 'hello', fn ...;
 };
-</pre>
+```
 
 ----------------
 
