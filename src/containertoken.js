@@ -17,15 +17,7 @@ var Token = require('./token');
 var ContainerToken = function(name, definition, require) {
   Token.call(this, function() {
     return (new Container(definition, _.object(require, arguments))).run();
-  }, name);
-
-  /**
-  * The required dependencies names of this container token<br />
-  * it is passed to the containertoken constructor
-  * @type {Array<string>}
-  * @default []
-  */
-  this.require = require || [];
+  }, name, require);
 
   /**
   * The definition of this container token
@@ -35,6 +27,14 @@ var ContainerToken = function(name, definition, require) {
 };
 
 util.inherits(ContainerToken, Token);
+
+/**
+ * Returns a clone of this token
+ * @return {ContainerToken}
+ */
+ContainerToken.prototype.clone = function() {
+  return new ContainerToken(this.name, this.definition.clone(), this.require);
+};
 
 /**
  * Returns true if the given function is included in this token definition

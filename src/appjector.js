@@ -51,9 +51,7 @@ appjector.container = function(dependencies, cpath, modules) {
       cpath ? utils.pathToTokens(cpath) : [],
 
       _.map(dependencies, function(value, name) {
-        return new Token(function() {
-          return value;
-        }, name);
+        return new Token(_.constant(value), name);
       }),
 
       _.map(modules, function(module, mpath) {
@@ -67,32 +65,6 @@ appjector.container = function(dependencies, cpath, modules) {
   }
 
   return new Container(definition(dependencies, cpath, modules));
-};
-
-/**
- * Allows to isolate a component and mock it's dependencies
- * @param {Container} container
- * @param {string[]} tree the component tree to the one to isolate
- * @param {DependenciesNameValueMap} dependencies the dependencies needed by the component not present in the isolated portion
- * @return {Object|function|string|number|array}
- */
-appjector.isolate = function(container, tree, dependencies) {
-
-  function wtoken(definition, tree) {
-    var token = definition.get(tree.shift());
-    if (!tree.length) {
-      return token;
-    }
-    return wtoken(token.definition, tree);
-  }
-
-  var token = wtoken(container.definition, tree);
-
-  return (new Container(
-    new Definition(token),
-    dependencies
-  )).get(token.name);
-
 };
 
 appjector.AppSwitch = require('./appswitch');

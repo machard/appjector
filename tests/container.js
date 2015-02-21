@@ -7,6 +7,7 @@ var _ = require('lodash');
 var Container = require('../src/container');
 var Tocken = require('../src/token');
 var Definition = require('../src/definition');
+var appjector = require('../src/appjector');
 
 describe('testing Container', function() {
   it('should throw an error if multiple token have the same name', function() {
@@ -67,6 +68,17 @@ describe('testing Container', function() {
         assert(spy.calledOnce);
       });
     });
+
+    it('should clone', function() {
+      var clone = container.clone();
+
+      assert.notEqual(clone, container);
+      assert.notEqual(clone._dependencies, container._dependencies);
+      assert.notEqual(clone._definition, container._definition);
+
+      assert.deepEqual(clone._dependencies, container._dependencies);
+      assert.deepEqual(clone._definition.names(), container._definition.names());
+    });
   });
 
   context('when instancied with tokens containing circular dependencies', function() {
@@ -100,5 +112,34 @@ describe('testing Container', function() {
         container.run();
       });
     });
+  });
+});
+
+describe('testing Container utils', function() {
+  var c;
+  beforeEach(function() {
+    c = appjector.container('./tests/fixtures/ok', {
+      'module' : {
+        dependencies : {token : 'pouet'},
+        modules : {
+          'sub' : {
+            require : ['token']
+          }
+        }
+      }
+    });
+  });
+
+  it('should allow to isolate a component', function() {
+    var moduleWithMockedToken = c.isolate(['module', 'sub'], {token : 'pouet'});
+
+    assert.equal(moduleWithMockedToken.get('token'), 'pouet');
+  });
+
+  it('should return a container with a component replaced', function() {
+    var container = c.replace(['module', 'sub'], 'pouet');
+
+    assert.equal(container.get('module').get('sub'), 'pouet');
+    assert.notEqual(container, c);
   });
 });

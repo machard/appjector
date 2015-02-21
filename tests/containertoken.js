@@ -49,4 +49,15 @@ describe('Testing ContainerToken', function() {
     assert.strictEqual(container.get('sub').get('subtoken'), 'subtoken');
   });
 
+  it('should clone', function() {
+    var clone = containerToken.clone();
+
+    assert.notEqual(clone, containerToken);
+
+    assert.equal(containerToken.name, clone.name);
+    assert.deepEqual(containerToken.require, clone.require);
+
+    assert.notEqual(containerToken.definition, clone.definition);
+  });
+
 });

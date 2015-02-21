@@ -15,28 +15,31 @@ module.exports = {
   */
   pathToTokens : function pathToTokens(basePath) {
     basePath = fs.realpathSync(basePath);
+    var files = fs.readdirSync(basePath);
 
-    return _.flatten(_.reduce(fs.readdirSync(basePath), function(tokens, file) {
-      file = path.join(basePath, file);
+    return _.flatten(
+      _.reduce(files, function(tokens, file) {
+        file = path.join(basePath, file);
 
-      if (fs.statSync(file).isDirectory()) {
-        return _.union(tokens, pathToTokens(file));
-      }
+        if (fs.statSync(file).isDirectory()) {
+          return _.union(tokens, pathToTokens(file));
+        }
 
-      if (!/\.js$/.test(file)) {
-        return tokens;
-      }
+        if (!/\.js$/.test(file)) {
+          return tokens;
+        }
 
-      var module = require(file);
+        var module = require(file);
 
-      if (!_.isFunction(module)) {
-        return tokens;
-      }
+        if (!_.isFunction(module)) {
+          return tokens;
+        }
 
-      var name = path.basename(file, path.extname(file));
-      name = name.replace(/[^\w\d]/g, '');
+        var name = path.basename(file, path.extname(file));
+        name = name.replace(/[^\w\d]/g, '');
 
-      return _.union(tokens, [new Token(module, name)]);
-    }, []));
+        return _.union(tokens, [new Token(module, name)]);
+      }, [])
+    );
   }
 };

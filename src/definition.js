@@ -20,6 +20,18 @@ function Definition() {
 }
 
 /**
+ * Clone this definition
+ * @return {Definition}
+*/
+Definition.prototype.clone = function() {
+  return new Definition(
+    _.map(this.tokens, function(token) {
+      return token.clone();
+    })
+  );
+};
+
+/**
  * Push a token to the definition<br />
  * it will add the passed tokens to this definition tokens<br />
  * If multiple resulting tokens include the same getter, only the last one will be kept
@@ -49,6 +61,23 @@ Definition.prototype.get = function(name) {
 */
 Definition.prototype.names = function() {
   return _.pluck(this.tokens, 'name');
+};
+
+/**
+ * Replace a token in the definition<br />
+ * It will replace the token matching the given token name
+ * @param {Token} token
+ */
+Definition.prototype.replace = function(token) {
+  var toBeReplacedIndex = this.tokens.indexOf(
+    _.findWhere(this.tokens, {name : token.name})
+  );
+
+  if (toBeReplacedIndex < 0) {
+    throw new Error('Original token not found');
+  }
+
+  this.tokens.splice(toBeReplacedIndex, 1, token);
 };
 
 module.exports = Definition;

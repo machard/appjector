@@ -7,8 +7,9 @@ var fnParams = require('fn-params');
  * @class
  * @param {Function} fn the function we want as a token
  * @param {string} name the name we want the token to have
+ * @param {Array<string>} [require] Array of dependencies as string
  */
-var Token = function(fn, name) {
+var Token = function(fn, name, require) {
   /**
   * the token name
   * @type {string}
@@ -26,7 +27,15 @@ var Token = function(fn, name) {
   * it is built from the given fn arguments
   * @type {Array<string>}
   */
-  this.require = fnParams(fn);
+  this.require = require || fnParams(fn);
+};
+
+/**
+ * Returns a clone of this token
+ * @return {Token}
+ */
+Token.prototype.clone = function() {
+  return new Token(this.getter, this.name, this.require);
 };
 
 /**

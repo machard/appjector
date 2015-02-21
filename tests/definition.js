@@ -1,6 +1,7 @@
 'use strict';
 
 var assert = require('assert');
+var _ = require('lodash');
 
 var Definition = require('../src/definition');
 var Tocken = require('../src/token');
@@ -63,5 +64,38 @@ describe('testing Definition', function() {
 
     assert(!definition.get('token1'));
     assert(definition.get('token2'));
+  });
+
+  it('should allow to replace a token', function() {
+    var definition = new Definition(new Tocken(function() {}, 'replace'));
+
+    var replace = new Tocken(function() {}, 'replace');
+
+    definition.replace(replace);
+
+    assert.strictEqual(definition.get('replace'), replace);
+  });
+
+  it('should throw if replacing a non existant token', function() {
+    var definition = new Definition();
+
+    assert.throws(function() {
+      definition.replace(new Tocken(_.noop, 'replace'));
+    });
+  });
+
+  it('should clone definition', function() {
+    var token1 = new Tocken(function() {}, 'token1');
+    var token2 = new Tocken(function() {}, 'token2');
+
+    var definition = new Definition(token1, token2);
+
+    var clone = definition.clone();
+
+    assert.notEqual(clone, definition);
+
+    assert.deepEqual(definition.names(), clone.names());
+    assert.notEqual(definition.get('token1'), clone.get('token1'));
+    assert.notEqual(definition.get('token2'), clone.get('token2'));
   });
 });
