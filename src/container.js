@@ -20,7 +20,7 @@ function Container(definition, dependencies) {
   this._definition = definition;
   this._dependencies = dependencies;
 
-  this.cache = dependencies || {};
+  this.cache = _.clone(dependencies) || {};
   this.resolving = [];
 }
 

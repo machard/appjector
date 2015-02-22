@@ -74,7 +74,7 @@ Definition.prototype.replace = function(token) {
   );
 
   if (toBeReplacedIndex < 0) {
-    throw new Error('Original token not found');
+    throw new Error('Original token not found', token.name);
   }
 
   this.tokens.splice(toBeReplacedIndex, 1, token);
