@@ -121,4 +121,35 @@ Container.prototype.replace = function(tree, replacement) {
   return container;
 };
 
+/**
+ * Returns a container with only the specified components
+ * @param {Container} container
+ * @param {string[]} components
+ * @return {Container}
+ */
+Container.prototype.keep = function(components) {
+
+  return new Container(
+    new Definition(
+      _.filter(this.definition().tokens, function(token) {
+        return _.contains(components, token.name);
+      })
+    ),
+    this._dependencies
+  );
+};
+
+/**
+ * Returns a container without the specified components
+ * @param {Container} container
+ * @param {string[]} components
+ * @return {Container}
+ */
+Container.prototype.without = function(components) {
+
+  return this.keep(
+    _.difference(this.definition().names(), components)
+  );
+};
+
 module.exports = Container;

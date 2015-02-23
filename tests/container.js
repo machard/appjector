@@ -118,16 +118,20 @@ describe('testing Container', function() {
 describe('testing Container utils', function() {
   var c;
   beforeEach(function() {
-    c = appjector.container('./tests/fixtures/ok', {
-      'module' : {
-        dependencies : {token : 'pouet'},
-        modules : {
-          'sub' : {
-            require : ['token']
+    c = appjector.container(
+      {test : function() {return 'test';}},
+      './tests/fixtures/ok',
+      {
+        'module' : {
+          dependencies : {token : 'pouet'},
+          modules : {
+            'sub' : {
+              require : ['token']
+            }
           }
         }
       }
-    });
+    );
   });
 
   it('should allow to isolate a component', function() {
@@ -141,5 +145,23 @@ describe('testing Container utils', function() {
 
     assert.equal(container.get('module').get('sub'), 'pouet');
     assert.notEqual(container, c);
+  });
+
+  it('should keep only test', function() {
+    var container = c.keep(['test']);
+
+    assert(container.get('test'));
+    assert.throws(function() {
+      container.get('module');
+    });
+  });
+
+  it('should keep only module', function() {
+    var container = c.without(['test']);
+
+    assert(container.get('module'));
+    assert.throws(function() {
+      container.get('test');
+    });
   });
 });
