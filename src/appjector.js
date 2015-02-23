@@ -7,6 +7,7 @@ var Container = require('./container');
 var Token = require('./token');
 var ContainerToken = require('./containertoken');
 var Definition = require('./definition');
+var AppSwitch = require('./appswitch');
 var utils = require('./utils');
 
 /**
@@ -51,7 +52,7 @@ appjector.container = function(dependencies, cpath, modules) {
       cpath ? utils.pathToTokens(cpath) : [],
 
       _.map(dependencies, function(value, name) {
-        return new Token(_.constant(value), name);
+        return new Token(value, name);
       }),
 
       _.map(modules, function(module, mpath) {
@@ -67,6 +68,8 @@ appjector.container = function(dependencies, cpath, modules) {
   return new Container(definition(dependencies, cpath, modules));
 };
 
-appjector.AppSwitch = require('./appswitch');
+appjector.AppSwitch = function() {
+  return new AppSwitch();
+};
 
 module.exports = appjector;

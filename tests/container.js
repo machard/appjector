@@ -120,7 +120,7 @@ describe('testing Container utils', function() {
   beforeEach(function() {
     c = appjector.container('./tests/fixtures/ok', {
       'module' : {
-        dependencies : {token : 'pouet'},
+        dependencies : {token : function() {return 'pouet';}},
         modules : {
           'sub' : {
             require : ['token']
