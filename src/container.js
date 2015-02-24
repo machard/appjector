@@ -37,7 +37,15 @@ Container.prototype.clone = function() {
  * @return {Container} the instance on which this method is called
  */
 Container.prototype.run = function() {
-  _.each(this.definition().names(), this.get, this);
+  _
+    .chain(this.definition().names())
+    .map(this.get, this)
+    .each(function(value) {
+      if (value instanceof Container) {
+        value.run();
+      }
+    });
+
   return this;
 };
 

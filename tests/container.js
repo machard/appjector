@@ -30,7 +30,7 @@ describe('testing Container', function() {
     var container, spies;
 
     beforeEach(function() {
-      spies = _.object(_.map(['main', 'dep', 'Klass'], function(name) {
+      spies = _.object(_.map(['main', 'dep', 'Klass', 'ct'], function(name) {
         return [name, sinon.spy(function() {
           return {name : name};
         })];
@@ -43,7 +43,12 @@ describe('testing Container', function() {
         new Tocken(function() {
           return spies.dep();
         }, 'dep'),
-        new Tocken(spies.Klass, 'Klass')
+        new Tocken(spies.Klass, 'Klass'),
+        new Tocken(function() {
+          var c = new Container(new Definition());
+          c.run = spies.ct;
+          return c;
+        }, 'ct')
       ]), {extra : 'pouet'});
     });
 
@@ -62,7 +67,7 @@ describe('testing Container', function() {
       assert.strictEqual(container.get('dep'), container.get('dep'));
     });
 
-    it('should instantiate every token', function() {
+    it('should instantiate every token and run container components', function() {
       container.run();
       _.each(spies, function(spy) {
         assert(spy.calledOnce);
