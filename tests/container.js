@@ -30,7 +30,7 @@ describe('testing Container', function() {
     var container, spies;
 
     beforeEach(function() {
-      spies = _.object(_.map(['main', 'dep', 'Klass', 'ct'], function(name) {
+      spies = _.object(_.map(['main', 'dep'], function(name) {
         return [name, sinon.spy(function() {
           return {name : name};
         })];
@@ -38,17 +38,11 @@ describe('testing Container', function() {
 
       container = new Container(new Definition([
         new Tocken(function(extra, dep) {
-          return spies.main(dep);
+          return spies.main.call(this, dep);
         }, 'main'),
         new Tocken(function() {
-          return spies.dep();
-        }, 'dep'),
-        new Tocken(spies.Klass, 'Klass'),
-        new Tocken(function() {
-          var c = new Container(new Definition());
-          c.run = spies.ct;
-          return c;
-        }, 'ct')
+          return spies.dep.call(this);
+        }, 'dep')
       ]), {extra : 'pouet'});
     });
 
@@ -63,15 +57,25 @@ describe('testing Container', function() {
       assert(spies.main.calledWith(container.get('dep')));
     });
 
+    it('should call fn with within the container context', function() {
+      container.get('dep');
+      assert(spies.dep.calledOn(container));
+    });
+
     it('should always return the exact same value', function() {
       assert.strictEqual(container.get('dep'), container.get('dep'));
     });
 
-    it('should instantiate every token and run container components', function() {
+    it('should instantiate every token', function() {
       container.run();
       _.each(spies, function(spy) {
         assert(spy.calledOnce);
       });
+    });
+
+    it('should have a running property when runned', function() {
+      container.run();
+      assert(container.running);
     });
 
     it('should clone', function() {

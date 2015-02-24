@@ -49,6 +49,12 @@ describe('Testing ContainerToken', function() {
     assert.strictEqual(container.get('sub').get('subtoken'), 'subtoken');
   });
 
+  it('should run the container if containing container is running', function() {
+    var container = containerToken.getter.call({running : true}, 'dep1', 'dep2');
+
+    assert(container.running);
+  });
+
   it('should clone', function() {
     var clone = containerToken.clone();
 

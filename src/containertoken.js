@@ -16,7 +16,13 @@ var Token = require('./token');
  */
 var ContainerToken = function(name, definition, require) {
   Token.call(this, function() {
-    return new Container(definition, _.object(require, arguments));
+    var container = new Container(definition, _.object(require, arguments));
+
+    if (this.running) {
+      container.run();
+    }
+
+    return container;
   }, name, require);
 
   /**
