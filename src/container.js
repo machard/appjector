@@ -22,6 +22,7 @@ function Container(definition, dependencies) {
 
   this.cache = _.clone(dependencies) || {};
   this.resolving = [];
+  this.running = false;
 }
 
 /**
@@ -37,15 +38,8 @@ Container.prototype.clone = function() {
  * @return {Container} the instance on which this method is called
  */
 Container.prototype.run = function() {
-  _
-    .chain(this.definition().names())
-    .map(this.get, this)
-    .each(function(value) {
-      if (value instanceof Container) {
-        value.run();
-      }
-    });
-
+  this.running = true;
+  _.each(this.definition().names(), this.get, this);
   return this;
 };
 
@@ -73,7 +67,7 @@ Container.prototype.get = function(tokenName) {
 
   var deps = _.map(token.require, this.get, this);
 
-  this.cache[tokenName] = token.getter.apply(null, deps);
+  this.cache[tokenName] = token.getter.apply(this, deps);
 
   this.resolving = _.without(this.resolving, token);
 
