@@ -123,32 +123,38 @@ Container.prototype.replace = function(tree, replacement) {
 
 /**
  * Returns a container with only the specified components
- * @param {Container} container
+ * @param {string[]} [tree=[]] the tree to the sub container
  * @param {string[]} components
  * @return {Container}
  */
-Container.prototype.keep = function(components) {
+Container.prototype.keep = function(tree, components) {
+  tree = tree || [];
 
-  return new Container(
-    new Definition(
-      _.filter(this.definition().tokens, function(token) {
-        return _.contains(components, token.name);
-      })
-    ),
-    this._dependencies
-  );
+  components = components || tree;
+  tree = components === tree ? [] : tree;
+
+  var container = this.clone();
+
+  container.definition(tree).keep(components);
+
+  return container;
 };
 
 /**
  * Returns a container without the specified components
- * @param {Container} container
+ * @param {string[]} [tree=[]] the tree to the sub container
  * @param {string[]} components
  * @return {Container}
  */
-Container.prototype.without = function(components) {
+Container.prototype.without = function(tree, components) {
+  tree = tree || [];
+
+  components = components || tree;
+  tree = components === tree ? [] : tree;
 
   return this.keep(
-    _.difference(this.definition().names(), components)
+    tree,
+    _.difference(this.definition(tree).names(), components)
   );
 };
 

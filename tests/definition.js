@@ -98,4 +98,16 @@ describe('testing Definition', function() {
     assert.notEqual(definition.get('token1'), clone.get('token1'));
     assert.notEqual(definition.get('token2'), clone.get('token2'));
   });
+
+  it('should keep only specified tokens', function() {
+    var token1 = new Tocken(function() {}, 'token1');
+    var token2 = new Tocken(function() {}, 'token2');
+
+    var definition = new Definition(token1, token2);
+
+    definition.keep(['token1']);
+
+    assert(definition.get('token1'));
+    assert(!definition.get('token2'));
+  });
 });

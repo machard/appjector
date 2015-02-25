@@ -164,4 +164,24 @@ describe('testing Container utils', function() {
       container.get('test');
     });
   });
+
+  it('should keep only dep2 and token in module', function() {
+    var container = c.without(['module'], ['sub']);
+
+    assert(container.get('module').get('dep2'));
+    assert(container.get('module').get('token'));
+    assert.throws(function() {
+      container.get('module').get('sub');
+    });
+  });
+
+  it('should keep only sub and token in module', function() {
+    var container = c.keep(['module'], ['sub', 'token']);
+
+    assert(container.get('module').get('sub'));
+    assert(container.get('module').get('token'));
+    assert.throws(function() {
+      container.get('module').get('dep2');
+    });
+  });
 });
