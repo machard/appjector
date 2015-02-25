@@ -80,4 +80,14 @@ Definition.prototype.replace = function(token) {
   this.tokens.splice(toBeReplacedIndex, 1, token);
 };
 
+/**
+ * keep only specified tokens in the definition<br />
+ * @param {string[]} tokenNames
+ */
+Definition.prototype.keep = function(tokenNames) {
+  this.tokens = _.filter(this.tokens, function(token) {
+    return _.contains(tokenNames, token.name);
+  });
+};
+
 module.exports = Definition;
