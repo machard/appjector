@@ -57,8 +57,6 @@
             
                 <li data-name="appjector.container"><a href="appjector.html#container">container</a></li>
             
-                <li data-name="appjector.isolate"><a href="appjector.html#isolate">isolate</a></li>
-            
             </ul>
             <ul class="events itemMembers">
             
@@ -140,9 +138,19 @@
             
             <span class="subtitle">Methods</span>
             
+                <li data-name="Container#clone"><a href="Container.html#clone">clone</a></li>
+            
                 <li data-name="Container#get"><a href="Container.html#get">get</a></li>
             
+                <li data-name="Container#isolate"><a href="Container.html#isolate">isolate</a></li>
+            
+                <li data-name="Container#keep"><a href="Container.html#keep">keep</a></li>
+            
+                <li data-name="Container#replace"><a href="Container.html#replace">replace</a></li>
+            
                 <li data-name="Container#run"><a href="Container.html#run">run</a></li>
+            
+                <li data-name="Container#without"><a href="Container.html#without">without</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -175,6 +183,8 @@
             
             <span class="subtitle">Methods</span>
             
+                <li data-name="ContainerToken#clone"><a href="ContainerToken.html#clone">clone</a></li>
+            
                 <li data-name="ContainerToken#includes"><a href="ContainerToken.html#includes">includes</a></li>
             
             </ul>
@@ -202,11 +212,17 @@
             
             <span class="subtitle">Methods</span>
             
+                <li data-name="Definition#clone"><a href="Definition.html#clone">clone</a></li>
+            
                 <li data-name="Definition#get"><a href="Definition.html#get">get</a></li>
+            
+                <li data-name="Definition#keep"><a href="Definition.html#keep">keep</a></li>
             
                 <li data-name="Definition#names"><a href="Definition.html#names">names</a></li>
             
                 <li data-name="Definition#push"><a href="Definition.html#push">push</a></li>
+            
+                <li data-name="Definition#replace"><a href="Definition.html#replace">replace</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -236,6 +252,8 @@
             <ul class="methods itemMembers">
             
             <span class="subtitle">Methods</span>
+            
+                <li data-name="Token#clone"><a href="Token.html#clone">clone</a></li>
             
                 <li data-name="Token#includes"><a href="Token.html#includes">includes</a></li>
             
@@ -332,7 +350,7 @@
     
         
         <div class="tag-source">
-            <a href="appjector.js.html">appjector.js</a>, <a href="appjector.js.html#line42">line 42</a>
+            <a href="appjector.js.html">appjector.js</a>, <a href="appjector.js.html#line43">line 43</a>
         </div>
         
     </div>
@@ -535,209 +553,6 @@ modules can only be used when a cpath is provided<br />
     
 </dd>
 
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="isolate">
-            
-            <span class="type-signature static">static</span>appjector.isolate<span class="signature">(container, tree, dependencies)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Object|function|string|number|array}</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            <a href="appjector.js.html">appjector.js</a>, <a href="appjector.js.html#line79">line 79</a>
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Allows to isolate a component and mock it's dependencies
-    </div>
-    
-
-    
-    
-    
-    
-    
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>container</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type"><a href="Container.html">Container</a></span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                </td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>tree</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">string[]</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                the component tree to the one to isolate</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>dependencies</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#DependenciesNameValueMap">DependenciesNameValueMap</a></span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                the dependencies needed by the component not present in the isolated portion</td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    
-        <tr>
-            
-            <td class="type">
-            
-                        Object
-                         | 
-                    
-                        function
-                         | 
-                    
-                        string
-                         | 
-                    
-                        number
-                         | 
-                    
-                        array
-                        
-                    
-            </td>
-            <td class="description last"></td>
-        </tr>
-    
-    </tbody>
-</table>
-
-    
-    
-    
-</dd>
-
         </dl>
     
     
@@ -755,7 +570,7 @@ modules can only be used when a cpath is provided<br />
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Thu May 28 2015 19:52:11 GMT-0000 (UTC)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Thu May 28 2015 20:50:19 GMT-0000 (UTC)
         </footer>
     </div>
 </div>

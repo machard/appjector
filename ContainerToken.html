@@ -57,8 +57,6 @@
             
                 <li data-name="appjector.container"><a href="appjector.html#container">container</a></li>
             
-                <li data-name="appjector.isolate"><a href="appjector.html#isolate">isolate</a></li>
-            
             </ul>
             <ul class="events itemMembers">
             
@@ -140,9 +138,19 @@
             
             <span class="subtitle">Methods</span>
             
+                <li data-name="Container#clone"><a href="Container.html#clone">clone</a></li>
+            
                 <li data-name="Container#get"><a href="Container.html#get">get</a></li>
             
+                <li data-name="Container#isolate"><a href="Container.html#isolate">isolate</a></li>
+            
+                <li data-name="Container#keep"><a href="Container.html#keep">keep</a></li>
+            
+                <li data-name="Container#replace"><a href="Container.html#replace">replace</a></li>
+            
                 <li data-name="Container#run"><a href="Container.html#run">run</a></li>
+            
+                <li data-name="Container#without"><a href="Container.html#without">without</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -175,6 +183,8 @@
             
             <span class="subtitle">Methods</span>
             
+                <li data-name="ContainerToken#clone"><a href="ContainerToken.html#clone">clone</a></li>
+            
                 <li data-name="ContainerToken#includes"><a href="ContainerToken.html#includes">includes</a></li>
             
             </ul>
@@ -202,11 +212,17 @@
             
             <span class="subtitle">Methods</span>
             
+                <li data-name="Definition#clone"><a href="Definition.html#clone">clone</a></li>
+            
                 <li data-name="Definition#get"><a href="Definition.html#get">get</a></li>
+            
+                <li data-name="Definition#keep"><a href="Definition.html#keep">keep</a></li>
             
                 <li data-name="Definition#names"><a href="Definition.html#names">names</a></li>
             
                 <li data-name="Definition#push"><a href="Definition.html#push">push</a></li>
+            
+                <li data-name="Definition#replace"><a href="Definition.html#replace">replace</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -236,6 +252,8 @@
             <ul class="methods itemMembers">
             
             <span class="subtitle">Methods</span>
+            
+                <li data-name="Token#clone"><a href="Token.html#clone">clone</a></li>
             
                 <li data-name="Token#includes"><a href="Token.html#includes">includes</a></li>
             
@@ -614,8 +632,8 @@
 <dd>
     
     <div class="description">
-        The required dependencies names of this container token<br />
-it is passed to the containertoken constructor
+        required dependencies names of this token<br />
+it is built from the given fn arguments
     </div>
     
     
@@ -635,9 +653,6 @@ it is passed to the containertoken constructor
     
     
     
-    
-    <dt class="tag-default">Default Value:</dt>
-    <dd class="tag-default"><ul class="dummy"><li>[]</li></ul></dd>
     
     
     
@@ -661,6 +676,106 @@ it is passed to the containertoken constructor
             
 <dt>
     <div class="nameContainer">
+        <h4 class="name" id="clone">
+            
+            clone<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="ContainerToken.html">ContainerToken</a>}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="containertoken.js.html">containertoken.js</a>, <a href="containertoken.js.html#line41">line 41</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Returns a clone of this token
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        <a href="ContainerToken.html">ContainerToken</a>
+                        
+                    
+            </td>
+            <td class="description last"></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
         <h4 class="name" id="includes">
             
             includes<span class="signature">(fn)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Boolean}</span>
@@ -668,7 +783,7 @@ it is passed to the containertoken constructor
     
         
         <div class="tag-source">
-            <a href="containertoken.js.html">containertoken.js</a>, <a href="containertoken.js.html#line44">line 44</a>
+            <a href="containertoken.js.html">containertoken.js</a>, <a href="containertoken.js.html#line50">line 50</a>
         </div>
         
     </div>
@@ -819,7 +934,7 @@ it is passed to the containertoken constructor
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Thu May 28 2015 19:52:11 GMT-0000 (UTC)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Thu May 28 2015 20:50:19 GMT-0000 (UTC)
         </footer>
     </div>
 </div>
