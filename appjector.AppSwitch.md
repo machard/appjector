@@ -20,7 +20,7 @@ appjector
     'core' : {
       dependencies : {
       	// adding the appswitch component in the core module
-        'appswitch' : new appjector.AppSwitch()
+        'appswitch' : appjector.AppSwitch
       }
     }
   })

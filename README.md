@@ -9,7 +9,9 @@ Appjector
 [![Dependency Status](https://david-dm.org/machard/appjector.svg)](https://david-dm.org/machard/appjector)
 [![devDependency Status](https://david-dm.org/machard/appjector/dev-status.svg)](https://david-dm.org/machard/appjector#info=devDependencies)
 
-![cover](./img/cover.png)
+----------
+
+**This was an experiment** about **dependencies injection**. There are some nice concepts with these "applicative containers", especially when it comes to testing and sharing components between apps but it seems to add unneeded complexity.
 
 ----------
 
@@ -55,7 +57,7 @@ module.exports = function(dep1, dep2, Dep3) {)
 ----------------
 
 
-Defining modules
+Defining containers
 -------------
 
 Have a look at how `appjector.container` works [here](http://github.com/machard/appjector/blob/master/appjector.container.md)
@@ -71,10 +73,10 @@ Have a look at how `appjector.AppSwitch` helper works [here](http://github.com/m
 ----------------
 
 
-How to unit test
+How to test
 -------------
 
-Have a look at how `appjector.isolate` works [here](http://github.com/machard/appjector/blob/master/appjector.isolate.md)
+Have a look at how `container.isolate`, `container.replace`, `container.keep`, and `container.without` work [here](http://github.com/machard/appjector/blob/master/appjector.testing.md)
 
 
 ----------------

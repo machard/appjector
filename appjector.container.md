@@ -1,4 +1,4 @@
-Defining modules
+Defining containers/modules
 -------------
 
 > **Principles:**
@@ -127,7 +127,7 @@ appjector.container('./app', {
     extra dependencies can be specified at the app level
      <pre lang="javascript">
 appjector.container({
-  extraDependency : {}
+  extraDependency : function(module2, server) { return ... }
 }, './app', {
   'module1' : {
     // specify component of 
@@ -139,6 +139,7 @@ appjector.container({
   'module2' : {}
 }).run();
      </pre>
+     Extra dependency can have dependencies. This allows to reuse a dependency between apps for example.
     </td>
     <td><img src="./img/container.examples/5.png" width="350" /></td>
   </tr>
@@ -156,7 +157,7 @@ appjector.container('./app', {
   },
   'module2' : {
   	dependencies : {
-  	  extraDependency : {}
+  	  extraDependency : function(model) { return ... }
   	}
   }
 }).run();
@@ -166,7 +167,7 @@ appjector.container('./app', {
   </tr>
   <tr>
     <td>
-    or just dependencies. in this case modules definition can not be used as no app path is specified. this can be useful to create mocked modules
+    or just dependencies. in this case modules definition can not be used as no app path is specified.
      <pre lang="javascript">
 appjector.container({
   dep : {},

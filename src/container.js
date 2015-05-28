@@ -75,10 +75,10 @@ Container.prototype.get = function(tokenName) {
 };
 
 /**
- * @private
  * Return the definition of the container located at tree
  * @param {string[]} [tree=[]]
  * @return {Definition}
+ * @private
  */
 Container.prototype.definition = function(tree) {
   tree = tree || [];
